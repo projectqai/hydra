@@ -1,0 +1,5 @@
+build/
+android/build/
+android/libs/*
+!android/libs/.gitkeep
+android/src/main/jniLibs/

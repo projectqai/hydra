@@ -1,0 +1,16 @@
+{
+  "name": "@hydra/typescript-config",
+  "version": "1.0.0",
+  "description": "Shared TypeScript configuration for Hydra monorepo",
+  "private": true,
+  "exports": {
+    "./base.json": "./base.json",
+    "./strict.json": "./strict.json",
+    "./library.json": "./library.json"
+  },
+  "files": [
+    "base.json",
+    "strict.json",
+    "library.json"
+  ]
+}

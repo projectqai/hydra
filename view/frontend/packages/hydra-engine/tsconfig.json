@@ -1,0 +1,13 @@
+{
+  "extends": "@hydra/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./build",
+    "rootDir": "./src",
+    "declaration": true,
+    "noEmit": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*"]
+}

@@ -1,0 +1,42 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+  id 'expo-module-gradle-plugin'
+}
+
+def aarFile = file('libs/hydra.aar')
+def jarFile = file('libs/hydra.jar')
+def jniLibsDir = file('src/main/jniLibs')
+
+if (aarFile.exists()) {
+  delete jarFile
+  delete jniLibsDir
+  def extractDir = file("${buildDir}/aar-extract")
+  extractDir.mkdirs()
+  copy {
+    from zipTree(aarFile)
+    into extractDir
+  }
+  copy {
+    from "${extractDir}/classes.jar"
+    into file('libs')
+    rename { 'hydra.jar' }
+  }
+  copy {
+    from "${extractDir}/jni"
+    into jniLibsDir
+  }
+}
+
+android {
+  namespace "expo.modules.hydraengine"
+  defaultConfig {
+    versionCode 1
+    versionName '1.0.0'
+    consumerProguardFiles 'proguard-rules.pro'
+  }
+}
+
+dependencies {
+  implementation files('libs/hydra.jar')
+}
