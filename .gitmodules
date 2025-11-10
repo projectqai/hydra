@@ -1,0 +1,3 @@
+[submodule "view/frontend"]
+	path = view/frontend
+	url = https://github.com/projectqai/hydra-expo.git
