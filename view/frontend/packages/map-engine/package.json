@@ -1,0 +1,37 @@
+{
+  "name": "@hydra/map-engine",
+  "version": "1.0.0",
+  "description": "Map engine abstraction layer",
+  "private": true,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./types": "./src/types.ts",
+    "./constants": "./src/constants.ts",
+    "./map-engine": "./src/map-engine.ts",
+    "./adapters/leaflet": "./src/adapters/leaflet.ts",
+    "./utils/milsymbol": "./src/utils/milsymbol.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "milsymbol": "^2.2.0",
+    "supercluster": "^8.0.1"
+  },
+  "peerDependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@hydra/eslint-config": "workspace:*",
+    "@hydra/typescript-config": "workspace:*",
+    "@types/geojson": "^7946.0.15",
+    "@types/leaflet": "^1.9.12",
+    "@types/react": "~19.1.0",
+    "@types/supercluster": "^7.1.3",
+    "eslint": "^9.39.1",
+    "typescript": "~5.8.3"
+  }
+}

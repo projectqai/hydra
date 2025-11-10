@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+out
+.next
+.turbo
+.cache
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
+
+# Generated files
+*.generated.*
+generated
+
+# Coverage
+coverage
+.nyc_output
+
+# Misc
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Platform-specific
+android
+web-build
+.expo
+
+# Public assets
+public
+
+# Expo generated files
+packages/hydra-engine/.eslintrc.js
+
+# Cesium packages (vendored)
+packages/cesium
+packages/cesium-ion
+packages/cesium-ion-sdk

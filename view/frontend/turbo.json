@@ -1,0 +1,38 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "dangerouslyDisablePackageManagerCheck": true,
+  "globalDependencies": [".prettierrc.js", ".prettierignore", "eslint.config.js"],
+  "tasks": {
+    "lint": {
+      "inputs": ["**/*.{ts,tsx,js,jsx}", "eslint.config.js"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "inputs": ["**/*.{ts,tsx,js,jsx}", "eslint.config.js"],
+      "outputs": [],
+      "cache": false
+    },
+    "format": {
+      "inputs": ["**/*.{ts,tsx,js,jsx,json,md}", ".prettierrc.js"],
+      "outputs": [],
+      "cache": false
+    },
+    "test": {
+      "inputs": ["**/*.{ts,tsx,js,jsx}", "**/*.test.{ts,tsx}", "jest.config.*"]
+    },
+    "type-check": {
+      "inputs": ["**/*.{ts,tsx}", "tsconfig.json"],
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/**", "node_modules/.cache/metro/**"]
+    },
+    "dev": {
+      "cache": false,
+      "interactive": true,
+      "persistent": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@hydra/engine",
+  "version": "1.0.0",
+  "description": "Native module for Hydra backend engine",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly"
+  },
+  "private": true,
+  "devDependencies": {
+    "@hydra/eslint-config": "workspace:*",
+    "@hydra/typescript-config": "workspace:*",
+    "eslint": "^9.39.1",
+    "expo-module-scripts": "^5.0.8",
+    "typescript": "~5.9.2"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "expo-modules-core": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}

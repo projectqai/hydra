@@ -1,0 +1,43 @@
+# Monorepo
+apps/*/credentials.json
+apps/*/build
+packages/*/build
+
+# Turborepo
+.turbo
+
+# Expo
+.expo
+__generated__
+web-build
+eas-workingdir
+pc-api-*.json
+google-services.json
+
+expo-env.d.ts
+
+# Generated proto files
+apps/app/lib/api/generated/
+
+# Platform builds
+android
+!packages/hydra-engine/android
+
+# macOS
+.DS_Store
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Environment variables
+.env.*
+
+# Archives
+*.tar.gz
+
+# Claude Code
+.claude
+copybara.jar
