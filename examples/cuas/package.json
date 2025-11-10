@@ -1,0 +1,19 @@
+{
+  "name": "hydra-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "push-entities": "bun run push-entities.ts",
+    "generate": "PATH=\"$PATH:./node_modules/.bin\" protoc --ts_out=./generated --proto_path=../../view/proto/ ../../view/proto/world.proto --ts_opt=generate_dependencies,long_type_string"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.10.2",
+    "@connectrpc/connect": "^2.1.1",
+    "@connectrpc/connect-web": "^2.1.1",
+    "@projectqai/proto": "^0.0.2"
+  },
+  "devDependencies": {
+    "@protobuf-ts/plugin": "^2.9.4",
+    "bun-types": "latest"
+  }
+}

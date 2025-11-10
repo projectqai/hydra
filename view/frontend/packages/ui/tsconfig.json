@@ -1,0 +1,9 @@
+{
+  "extends": ["expo/tsconfig.base", "@hydra/typescript-config/strict.json"],
+  "compilerOptions": {
+    "verbatimModuleSyntax": false,
+    "jsx": "react-jsx"
+  },
+  "include": ["src", "nativewind-env.d.ts"],
+  "exclude": ["node_modules"]
+}

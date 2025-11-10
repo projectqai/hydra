@@ -1,0 +1,45 @@
+diff --git a/src/dom/marshal.tsx b/src/dom/marshal.tsx
+index 26e42d6da28d5060ce6564377c7851d6850196b7..8d819399fa79aa1b12a686828b0ec63fdff742ff 100644
+--- a/src/dom/marshal.tsx
++++ b/src/dom/marshal.tsx
+@@ -1,7 +1,11 @@
+ import { BridgeMessage, JSONValue } from './dom.types';
+ import { DOM_EVENT, NATIVE_ACTION, NATIVE_ACTION_RESULT } from './injection';
+ 
+-const IS_DOM =
++// PATCHED: Make IS_DOM a function so it evaluates dynamically
++// The static check fails in production because injectedJavaScriptBeforeContentLoaded
++// timing is not guaranteed on Android - globals may not be set at module load time
++// See: https://github.com/expo/expo/issues/40413
++const isDom = () =>
+   typeof window !== 'undefined' &&
+   // @ts-expect-error: Added via expo/dom
+   typeof window.$$EXPO_INITIAL_PROPS !== 'undefined' &&
+@@ -9,7 +13,7 @@ const IS_DOM =
+   typeof window.ReactNativeWebView !== 'undefined';
+ 
+ const emit = <TData extends JSONValue>(message: BridgeMessage<TData>) => {
+-  if (!IS_DOM) {
++  if (typeof window === 'undefined' || !(window as any).ReactNativeWebView) {
+     return;
+   }
+   (window as any).ReactNativeWebView.postMessage(JSON.stringify(message));
+@@ -18,7 +22,7 @@ const emit = <TData extends JSONValue>(message: BridgeMessage<TData>) => {
+ export const addEventListener = <TData extends JSONValue>(
+   onSubscribe: (message: BridgeMessage<TData>) => void
+ ): (() => void) => {
+-  if (!IS_DOM) {
++  if (typeof window === 'undefined') {
+     return () => {};
+   }
+   const listener = ({ detail }: any) => {
+@@ -33,9 +37,6 @@ export const addEventListener = <TData extends JSONValue>(
+ };
+ 
+ function invokeNativeAction(actionId: string, args: any[]): Promise<any> {
+-  if (!IS_DOM) {
+-    throw new Error('Cannot invoke native actions outside of a webview');
+-  }
+   return new Promise((res, rej) => {
+     const uid = Math.random().toString(36).slice(2);
+     const sub = addEventListener<{
