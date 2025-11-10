@@ -1,0 +1,179 @@
+---
+id: adsb-config
+config:
+  controller: adsblol
+  key: adsblol.location.v0
+  value:
+    query_type: location
+    latitude: 52.52
+    longitude: 13.49
+    radius_nm: 50
+---
+id: iss-tracker-config
+config:
+  controller: spacetrack
+  key: spacetrack.orbit.v0
+  value:
+    tle:    https://live.ariss.org/iss.txt
+    id:     spacetrack-iss
+    label:  "International Space Station"
+    symbol: "SNPPT-----*****"
+    interval: 0.2
+---
+id: spacetrack-starlink-2511-config
+label: Inline TLE Example
+config:
+  controller: spacetrack
+  key: spacetrack.orbit.v0
+  value:
+    tle: |
+      1 48332U 21036BJ  26008.30093631  .01564128  18636-2  14068-2 0  9997
+      2 48332  53.0399 337.5810 0008348 116.0415 244.1481 16.12439623259422
+    id:     spacetrack-starlink-2511
+    label:  "Inline TLE Starlink 2511"
+---
+id: kuiper-constellation-config
+label: Kuiper Constellation Tracker
+config:
+  controller: spacetrack-disabled
+  key: spacetrack.orbit.v0
+  value:
+    tle: https://celestrak.org/NORAD/elements/supplemental/sup-gp.php?FILE=kuiper&FORMAT=tle
+---
+id: camera-elbwarte
+label: "Hamburg Elbwarte Camera"
+geo:
+  latitude: 53.54390832338853
+  longitude: 9.91691900456634
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Altona Ost"
+      url: "https://webcam.solutionshosted.de/memfs/152a3e27-17e0-4a83-8552-50fa329f3adf.m3u8"
+      protocol: CameraProtocolHls
+---
+id: camera-rathausmarkt-hamburg
+label: "Rathausmarkt Hamburg"
+geo:
+  latitude: 53.5502801744295
+  longitude: 9.994284328189677
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Rathausmarkt Hamburg"
+      url: "https://webcam.solutionshosted.de/memfs/f49beef4-ac34-49c2-ae20-ff696814f8c5_output_0.m3u8"
+      protocol: CameraProtocolHls
+---
+id: camera-wasserturm-wedel
+label: "Wasserturm Wedel"
+geo:
+  latitude: 53.579862183520746
+  longitude: 9.706512664891015
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Wasserturm Wedel"
+      url: "https://webcam.solutionshosted.de/memfs/b423783c-7975-4f18-8351-4f6a0a357e19_output_0.m3u8"
+      protocol: CameraProtocolHls
+---
+id: camera-Hamburg-Strandweg-Port 
+label: "Hamburg - Strandweg - Port"
+geo:
+  latitude: 53.557779405425684
+  longitude: 9.795713307927747
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Hamburg - Strandweg - Port"
+      url: "https://www.hafen-hamburg.de/assets/files/wcpath_uuGl4KkwyCyXd39jVZyN4J6jiKQLVz1u/blankenese.jpg"
+      protocol: CameraProtocolImage
+---
+id: camera-Grimstad-Gjestehavn
+label: "Grimstad Gjestehavn"
+geo:
+  latitude: 58.34116129673865
+  longitude: 8.595235347747805
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Grimstad Gjestehavn"
+      url: "http://213.236.250.78/mjpg/video.mjpg"
+      protocol: CameraProtocolMjpeg
+---
+id: camera-Vest-Agder-Lindesnes-Lighthouse
+label: "Vest-Agder - Lindesnes Lighthouse"
+geo:
+  latitude: 57.98463738395755
+  longitude: 7.04800844192505
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Vest-Agder - Lindesnes Lighthouse"
+      url: "https://polarislive-lh.akamaized.net/hls/live/2039440/fvn/9wOObU20Nmtsqt8WRITUL/source.m3u8"
+      protocol: CameraProtocolHls
+---
+id: camera-Kristiansand-Port
+label: "Kristiansand Port"
+geo:
+  latitude: 58.14666929312107
+  longitude: 8.00609350204468
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Kristiansand Port"
+      url: "https://polarislive-lh.akamaized.net/hls/live/2039438/fvn/jqGugHSmKzQwRw5pMerRL/source.m3u8"
+      protocol: CameraProtocolHls
+---
+id: camera-Hirtshals-Harbour
+label: "Hirtshals - Harbour"
+geo:
+  latitude: 57.590181767096595
+  longitude: 9.971230030059814
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Nordlig retning"
+      url: "https://data.portofhirtshals.dk/webcam/webcam.aspx?imgno=2&v=2617"
+      protocol: CameraProtocolImage
+    - label: "Østlig retning"
+      url: "https://data.portofhirtshals.dk/webcam/webcam.aspx?imgno=1&v=2620"
+      protocol: CameraProtocolImage
+---
+id: camera-Kristiansand-Korsvikfjorden
+label: "Kristiansand Korsvikfjorden"
+geo:
+  latitude: 58.148118763061156
+  longitude: 8.0724835395813
+symbol:
+  milStd2525C: "SFGPE-----"
+camera:
+  cameras:
+    - label: "Kristiansand - Korsvikfjorden"
+      url: "https://lon.rtsp.me/ar6PyjiqV9w0wBXoI1cV2A/1767980259/hls/Be5inzdy.m3u8"
+      protocol: CameraProtocolHls
+
+
+
+
+---
+id: ais-stream-norway
+label: "AIS Stream"
+config:
+  controller: ais
+  key: ais.stream.v0
+  value:
+    host: 153.44.253.27
+    port: 5631
+    entity_expiry_seconds: 300
+    latitude: 53.55
+    longitude: 9.93
+    radius_km: 500
+---

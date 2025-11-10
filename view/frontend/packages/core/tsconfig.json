@@ -1,0 +1,12 @@
+{
+  "extends": ["expo/tsconfig.base", "@hydra/typescript-config/strict.json"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "nativewind-env.d.ts"],
+  "exclude": ["node_modules"]
+}
