@@ -138,11 +138,11 @@ func RunEngine(cmd *cobra.Command, args []string) error {
 	})
 
 	httpServer := &http.Server{
-		Addr:    "localhost:50051",
+		Addr:    ":50051",
 		Handler: h2c.NewHandler(corsHandler.Handler(mux), &http2.Server{}),
 	}
 
-	slog.Info("world server on http://localhost:50051")
+	slog.Info("world server on http://:50051")
 	if err := httpServer.ListenAndServe(); err != nil {
 		return fmt.Errorf("failed to serve: %v", err)
 	}

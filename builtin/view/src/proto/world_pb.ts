@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, protoInt64, Timestamp } from "@bufbuild/protobuf";
+import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
 
 /**
  * @generated from enum world.EntityChange
@@ -39,80 +39,6 @@ proto3.util.setEnumType(EntityChange, "world.EntityChange", [
 ]);
 
 /**
- * @generated from message world.Geometry
- */
-export class Geometry extends Message<Geometry> {
-  /**
-   * @generated from field: bytes wkb = 1;
-   */
-  wkb = new Uint8Array(0);
-
-  constructor(data?: PartialMessage<Geometry>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.Geometry";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "wkb", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Geometry {
-    return new Geometry().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Geometry {
-    return new Geometry().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Geometry {
-    return new Geometry().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: Geometry | PlainMessage<Geometry> | undefined, b: Geometry | PlainMessage<Geometry> | undefined): boolean {
-    return proto3.util.equals(Geometry, a, b);
-  }
-}
-
-/**
- * @generated from message world.EntityRef
- */
-export class EntityRef extends Message<EntityRef> {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id = "";
-
-  constructor(data?: PartialMessage<EntityRef>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.EntityRef";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): EntityRef {
-    return new EntityRef().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): EntityRef {
-    return new EntityRef().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): EntityRef {
-    return new EntityRef().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: EntityRef | PlainMessage<EntityRef> | undefined, b: EntityRef | PlainMessage<EntityRef> | undefined): boolean {
-    return proto3.util.equals(EntityRef, a, b);
-  }
-}
-
-/**
  * @generated from message world.Entity
  */
 export class Entity extends Message<Entity> {
@@ -120,11 +46,6 @@ export class Entity extends Message<Entity> {
    * @generated from field: string id = 1;
    */
   id = "";
-
-  /**
-   * @generated from field: string description = 2;
-   */
-  description = "";
 
   /**
    * @generated from field: optional world.ControllerRef controller = 3;
@@ -137,49 +58,34 @@ export class Entity extends Message<Entity> {
   lifetime?: Lifetime;
 
   /**
-   * @generated from field: optional world.GeoSpatialComponent geo = 10;
+   * @generated from field: optional world.GeoSpatialComponent geo = 11;
    */
   geo?: GeoSpatialComponent;
 
   /**
-   * @generated from field: optional world.SymbolComponent sym = 11;
+   * @generated from field: optional world.SymbolComponent symbol = 12;
    */
-  sym?: SymbolComponent;
+  symbol?: SymbolComponent;
 
   /**
-   * @generated from field: repeated world.SignalComponent signals = 12;
-   */
-  signals: SignalComponent[] = [];
-
-  /**
-   * @generated from field: optional world.TrackComponent track = 13;
-   */
-  track?: TrackComponent;
-
-  /**
-   * @generated from field: optional world.TaskableComponent taskable = 14;
-   */
-  taskable?: TaskableComponent;
-
-  /**
-   * @generated from field: optional world.AssetComponent asset = 16;
-   */
-  asset?: AssetComponent;
-
-  /**
-   * @generated from field: optional world.CameraComponent camera = 17;
+   * @generated from field: optional world.CameraComponent camera = 15;
    */
   camera?: CameraComponent;
 
   /**
-   * @generated from field: optional world.MissionComponent mission = 18;
+   * @generated from field: optional world.DetectionComponent detection = 16;
    */
-  mission?: MissionComponent;
+  detection?: DetectionComponent;
 
   /**
-   * @generated from field: optional world.PhyComponent phy = 19;
+   * @generated from field: optional world.BearingComponent bearing = 17;
    */
-  phy?: PhyComponent;
+  bearing?: BearingComponent;
+
+  /**
+   * @generated from field: optional world.LocationUncertaintyComponent locationUncertainty = 20;
+   */
+  locationUncertainty?: LocationUncertaintyComponent;
 
   constructor(data?: PartialMessage<Entity>) {
     super();
@@ -190,18 +96,14 @@ export class Entity extends Message<Entity> {
   static readonly typeName = "world.Entity";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "controller", kind: "message", T: ControllerRef, opt: true },
     { no: 4, name: "lifetime", kind: "message", T: Lifetime, opt: true },
-    { no: 10, name: "geo", kind: "message", T: GeoSpatialComponent, opt: true },
-    { no: 11, name: "sym", kind: "message", T: SymbolComponent, opt: true },
-    { no: 12, name: "signals", kind: "message", T: SignalComponent, repeated: true },
-    { no: 13, name: "track", kind: "message", T: TrackComponent, opt: true },
-    { no: 14, name: "taskable", kind: "message", T: TaskableComponent, opt: true },
-    { no: 16, name: "asset", kind: "message", T: AssetComponent, opt: true },
-    { no: 17, name: "camera", kind: "message", T: CameraComponent, opt: true },
-    { no: 18, name: "mission", kind: "message", T: MissionComponent, opt: true },
-    { no: 19, name: "phy", kind: "message", T: PhyComponent, opt: true },
+    { no: 11, name: "geo", kind: "message", T: GeoSpatialComponent, opt: true },
+    { no: 12, name: "symbol", kind: "message", T: SymbolComponent, opt: true },
+    { no: 15, name: "camera", kind: "message", T: CameraComponent, opt: true },
+    { no: 16, name: "detection", kind: "message", T: DetectionComponent, opt: true },
+    { no: 17, name: "bearing", kind: "message", T: BearingComponent, opt: true },
+    { no: 20, name: "locationUncertainty", kind: "message", T: LocationUncertaintyComponent, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Entity {
@@ -274,8 +176,6 @@ export class Lifetime extends Message<Lifetime> {
   from?: Timestamp;
 
   /**
-   * optional google.protobuf.Timestamp changed = 3;
-   *
    * @generated from field: optional google.protobuf.Timestamp until = 2;
    */
   until?: Timestamp;
@@ -323,6 +223,11 @@ export class GeoSpatialComponent extends Message<GeoSpatialComponent> {
    */
   latitude = 0;
 
+  /**
+   * @generated from field: double altitude = 3;
+   */
+  altitude = 0;
+
   constructor(data?: PartialMessage<GeoSpatialComponent>) {
     super();
     proto3.util.initPartial(data, this);
@@ -333,6 +238,7 @@ export class GeoSpatialComponent extends Message<GeoSpatialComponent> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "longitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 2, name: "latitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 3, name: "altitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GeoSpatialComponent {
@@ -390,746 +296,6 @@ export class SymbolComponent extends Message<SymbolComponent> {
 }
 
 /**
- * @generated from message world.SignalComponent
- */
-export class SignalComponent extends Message<SignalComponent> {
-  /**
-   * @generated from field: optional world.SignalBearing Bearing = 1;
-   */
-  Bearing?: SignalBearing;
-
-  constructor(data?: PartialMessage<SignalComponent>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.SignalComponent";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Bearing", kind: "message", T: SignalBearing, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SignalComponent {
-    return new SignalComponent().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SignalComponent {
-    return new SignalComponent().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SignalComponent {
-    return new SignalComponent().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: SignalComponent | PlainMessage<SignalComponent> | undefined, b: SignalComponent | PlainMessage<SignalComponent> | undefined): boolean {
-    return proto3.util.equals(SignalComponent, a, b);
-  }
-}
-
-/**
- * @generated from message world.SignalBearing
- */
-export class SignalBearing extends Message<SignalBearing> {
-  /**
-   * @generated from field: uint64 mid = 1;
-   */
-  mid = protoInt64.zero;
-
-  /**
-   * @generated from field: uint64 width = 2;
-   */
-  width = protoInt64.zero;
-
-  constructor(data?: PartialMessage<SignalBearing>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.SignalBearing";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "mid", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 2, name: "width", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SignalBearing {
-    return new SignalBearing().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SignalBearing {
-    return new SignalBearing().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SignalBearing {
-    return new SignalBearing().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: SignalBearing | PlainMessage<SignalBearing> | undefined, b: SignalBearing | PlainMessage<SignalBearing> | undefined): boolean {
-    return proto3.util.equals(SignalBearing, a, b);
-  }
-}
-
-/**
- * @generated from message world.TrackComponent
- */
-export class TrackComponent extends Message<TrackComponent> {
-  /**
-   * @generated from field: optional double elevation = 1;
-   */
-  elevation?: number;
-
-  /**
-   * @generated from field: optional double speed = 2;
-   */
-  speed?: number;
-
-  /**
-   * @generated from field: optional double azimuth = 3;
-   */
-  azimuth?: number;
-
-  /**
-   * @generated from field: repeated world.TrackHistoryPoint trail = 4;
-   */
-  trail: TrackHistoryPoint[] = [];
-
-  constructor(data?: PartialMessage<TrackComponent>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.TrackComponent";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "elevation", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 2, name: "speed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 3, name: "azimuth", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 4, name: "trail", kind: "message", T: TrackHistoryPoint, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TrackComponent {
-    return new TrackComponent().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TrackComponent {
-    return new TrackComponent().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TrackComponent {
-    return new TrackComponent().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: TrackComponent | PlainMessage<TrackComponent> | undefined, b: TrackComponent | PlainMessage<TrackComponent> | undefined): boolean {
-    return proto3.util.equals(TrackComponent, a, b);
-  }
-}
-
-/**
- * @generated from message world.TrackHistoryPoint
- */
-export class TrackHistoryPoint extends Message<TrackHistoryPoint> {
-  /**
-   * @generated from field: double longitude = 1;
-   */
-  longitude = 0;
-
-  /**
-   * @generated from field: double latitude = 2;
-   */
-  latitude = 0;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp timestamp = 3;
-   */
-  timestamp?: Timestamp;
-
-  /**
-   * @generated from field: optional double elevation = 4;
-   */
-  elevation?: number;
-
-  /**
-   * @generated from field: optional double speed = 5;
-   */
-  speed?: number;
-
-  /**
-   * @generated from field: optional double azimuth = 6;
-   */
-  azimuth?: number;
-
-  constructor(data?: PartialMessage<TrackHistoryPoint>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.TrackHistoryPoint";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "longitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 2, name: "latitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 3, name: "timestamp", kind: "message", T: Timestamp },
-    { no: 4, name: "elevation", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "speed", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 6, name: "azimuth", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TrackHistoryPoint {
-    return new TrackHistoryPoint().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TrackHistoryPoint {
-    return new TrackHistoryPoint().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TrackHistoryPoint {
-    return new TrackHistoryPoint().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: TrackHistoryPoint | PlainMessage<TrackHistoryPoint> | undefined, b: TrackHistoryPoint | PlainMessage<TrackHistoryPoint> | undefined): boolean {
-    return proto3.util.equals(TrackHistoryPoint, a, b);
-  }
-}
-
-/**
- * @generated from message world.MissionWaypoint
- */
-export class MissionWaypoint extends Message<MissionWaypoint> {
-  /**
-   * @generated from field: uint32 sequence = 1;
-   */
-  sequence = 0;
-
-  /**
-   * @generated from field: double longitude = 2;
-   */
-  longitude = 0;
-
-  /**
-   * @generated from field: double latitude = 3;
-   */
-  latitude = 0;
-
-  /**
-   * @generated from field: optional double elevation = 4;
-   */
-  elevation?: number;
-
-  /**
-   * @generated from field: uint32 command = 5;
-   */
-  command = 0;
-
-  /**
-   * @generated from field: bool current = 6;
-   */
-  current = false;
-
-  /**
-   * @generated from field: bool autocontinue = 7;
-   */
-  autocontinue = false;
-
-  /**
-   * @generated from field: float param1 = 8;
-   */
-  param1 = 0;
-
-  /**
-   * @generated from field: float param2 = 9;
-   */
-  param2 = 0;
-
-  /**
-   * @generated from field: float param3 = 10;
-   */
-  param3 = 0;
-
-  /**
-   * @generated from field: float param4 = 11;
-   */
-  param4 = 0;
-
-  constructor(data?: PartialMessage<MissionWaypoint>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.MissionWaypoint";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "sequence", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 2, name: "longitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 3, name: "latitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 4, name: "elevation", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "command", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 6, name: "current", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 7, name: "autocontinue", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 8, name: "param1", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 9, name: "param2", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 10, name: "param3", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 11, name: "param4", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MissionWaypoint {
-    return new MissionWaypoint().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MissionWaypoint {
-    return new MissionWaypoint().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MissionWaypoint {
-    return new MissionWaypoint().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: MissionWaypoint | PlainMessage<MissionWaypoint> | undefined, b: MissionWaypoint | PlainMessage<MissionWaypoint> | undefined): boolean {
-    return proto3.util.equals(MissionWaypoint, a, b);
-  }
-}
-
-/**
- * @generated from message world.TaskableOption
- */
-export class TaskableOption extends Message<TaskableOption> {
-  /**
-   * @generated from field: string controller = 1;
-   */
-  controller = "";
-
-  /**
-   * @generated from field: string relativeID = 2;
-   */
-  relativeID = "";
-
-  /**
-   * @generated from field: string actionLabel = 3;
-   */
-  actionLabel = "";
-
-  /**
-   * @generated from field: string description = 4;
-   */
-  description = "";
-
-  /**
-   * @generated from field: repeated string taskedEntityID = 5;
-   */
-  taskedEntityID: string[] = [];
-
-  constructor(data?: PartialMessage<TaskableOption>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.TaskableOption";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "controller", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "relativeID", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "actionLabel", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "taskedEntityID", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TaskableOption {
-    return new TaskableOption().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TaskableOption {
-    return new TaskableOption().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TaskableOption {
-    return new TaskableOption().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: TaskableOption | PlainMessage<TaskableOption> | undefined, b: TaskableOption | PlainMessage<TaskableOption> | undefined): boolean {
-    return proto3.util.equals(TaskableOption, a, b);
-  }
-}
-
-/**
- * @generated from message world.TaskableComponent
- */
-export class TaskableComponent extends Message<TaskableComponent> {
-  /**
-   * @generated from field: repeated world.TaskableOption Taskables = 1;
-   */
-  Taskables: TaskableOption[] = [];
-
-  constructor(data?: PartialMessage<TaskableComponent>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.TaskableComponent";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "Taskables", kind: "message", T: TaskableOption, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TaskableComponent {
-    return new TaskableComponent().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TaskableComponent {
-    return new TaskableComponent().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TaskableComponent {
-    return new TaskableComponent().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: TaskableComponent | PlainMessage<TaskableComponent> | undefined, b: TaskableComponent | PlainMessage<TaskableComponent> | undefined): boolean {
-    return proto3.util.equals(TaskableComponent, a, b);
-  }
-}
-
-/**
- * @generated from message world.MavlinkStatus
- */
-export class MavlinkStatus extends Message<MavlinkStatus> {
-  /**
-   * @generated from field: bool armed = 1;
-   */
-  armed = false;
-
-  /**
-   * @generated from field: string flightMode = 2;
-   */
-  flightMode = "";
-
-  /**
-   * @generated from field: string systemStatus = 3;
-   */
-  systemStatus = "";
-
-  /**
-   * @generated from field: uint32 customMode = 4;
-   */
-  customMode = 0;
-
-  /**
-   * @generated from field: uint32 baseMode = 5;
-   */
-  baseMode = 0;
-
-  /**
-   * Connection info
-   *
-   * @generated from field: uint32 systemId = 10;
-   */
-  systemId = 0;
-
-  /**
-   * @generated from field: uint32 componentId = 11;
-   */
-  componentId = 0;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp lastHeartbeat = 12;
-   */
-  lastHeartbeat?: Timestamp;
-
-  /**
-   * GPS status
-   *
-   * @generated from field: string gpsFixType = 20;
-   */
-  gpsFixType = "";
-
-  /**
-   * @generated from field: uint32 gpsSatellites = 21;
-   */
-  gpsSatellites = 0;
-
-  /**
-   * @generated from field: float gpsHdop = 22;
-   */
-  gpsHdop = 0;
-
-  /**
-   * @generated from field: float gpsVdop = 23;
-   */
-  gpsVdop = 0;
-
-  /**
-   * Battery details
-   *
-   * @generated from field: float batteryVoltage = 30;
-   */
-  batteryVoltage = 0;
-
-  /**
-   * @generated from field: float batteryCurrent = 31;
-   */
-  batteryCurrent = 0;
-
-  /**
-   * Mission status
-   *
-   * @generated from field: uint32 missionCurrent = 40;
-   */
-  missionCurrent = 0;
-
-  /**
-   * @generated from field: uint32 missionCount = 41;
-   */
-  missionCount = 0;
-
-  /**
-   * System health
-   *
-   * @generated from field: uint32 voltageBoard = 50;
-   */
-  voltageBoard = 0;
-
-  /**
-   * @generated from field: int32 currentBoard = 51;
-   */
-  currentBoard = 0;
-
-  /**
-   * @generated from field: uint32 dropRateComm = 52;
-   */
-  dropRateComm = 0;
-
-  /**
-   * @generated from field: uint32 errorsComm = 53;
-   */
-  errorsComm = 0;
-
-  /**
-   * RC status
-   *
-   * @generated from field: uint32 rcRssi = 60;
-   */
-  rcRssi = 0;
-
-  /**
-   * @generated from field: repeated uint32 rcChannels = 61;
-   */
-  rcChannels: number[] = [];
-
-  /**
-   * Attitude (in radians)
-   *
-   * @generated from field: float roll = 70;
-   */
-  roll = 0;
-
-  /**
-   * @generated from field: float pitch = 71;
-   */
-  pitch = 0;
-
-  /**
-   * @generated from field: float yaw = 72;
-   */
-  yaw = 0;
-
-  /**
-   * @generated from field: float rollSpeed = 73;
-   */
-  rollSpeed = 0;
-
-  /**
-   * @generated from field: float pitchSpeed = 74;
-   */
-  pitchSpeed = 0;
-
-  /**
-   * @generated from field: float yawSpeed = 75;
-   */
-  yawSpeed = 0;
-
-  /**
-   * Velocity (m/s in NED frame)
-   *
-   * @generated from field: float velocityX = 80;
-   */
-  velocityX = 0;
-
-  /**
-   * @generated from field: float velocityY = 81;
-   */
-  velocityY = 0;
-
-  /**
-   * @generated from field: float velocityZ = 82;
-   */
-  velocityZ = 0;
-
-  /**
-   * @generated from field: float groundSpeed = 83;
-   */
-  groundSpeed = 0;
-
-  /**
-   * @generated from field: float climbRate = 84;
-   */
-  climbRate = 0;
-
-  constructor(data?: PartialMessage<MavlinkStatus>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.MavlinkStatus";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "armed", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "flightMode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "systemStatus", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "customMode", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 5, name: "baseMode", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 10, name: "systemId", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 11, name: "componentId", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 12, name: "lastHeartbeat", kind: "message", T: Timestamp },
-    { no: 20, name: "gpsFixType", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 21, name: "gpsSatellites", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 22, name: "gpsHdop", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 23, name: "gpsVdop", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 30, name: "batteryVoltage", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 31, name: "batteryCurrent", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 40, name: "missionCurrent", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 41, name: "missionCount", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 50, name: "voltageBoard", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 51, name: "currentBoard", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 52, name: "dropRateComm", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 53, name: "errorsComm", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 60, name: "rcRssi", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
-    { no: 61, name: "rcChannels", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
-    { no: 70, name: "roll", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 71, name: "pitch", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 72, name: "yaw", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 73, name: "rollSpeed", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 74, name: "pitchSpeed", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 75, name: "yawSpeed", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 80, name: "velocityX", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 81, name: "velocityY", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 82, name: "velocityZ", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 83, name: "groundSpeed", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-    { no: 84, name: "climbRate", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MavlinkStatus {
-    return new MavlinkStatus().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MavlinkStatus {
-    return new MavlinkStatus().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MavlinkStatus {
-    return new MavlinkStatus().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: MavlinkStatus | PlainMessage<MavlinkStatus> | undefined, b: MavlinkStatus | PlainMessage<MavlinkStatus> | undefined): boolean {
-    return proto3.util.equals(MavlinkStatus, a, b);
-  }
-}
-
-/**
- * @generated from message world.AssetComponent
- */
-export class AssetComponent extends Message<AssetComponent> {
-  /**
-   * @generated from field: optional int32 batteryPercent = 1;
-   */
-  batteryPercent?: number;
-
-  /**
-   * @generated from field: optional google.protobuf.Timestamp lastSeen = 2;
-   */
-  lastSeen?: Timestamp;
-
-  /**
-   * @generated from field: optional world.MavlinkStatus mavlink = 20;
-   */
-  mavlink?: MavlinkStatus;
-
-  constructor(data?: PartialMessage<AssetComponent>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.AssetComponent";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "batteryPercent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 2, name: "lastSeen", kind: "message", T: Timestamp, opt: true },
-    { no: 20, name: "mavlink", kind: "message", T: MavlinkStatus, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AssetComponent {
-    return new AssetComponent().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AssetComponent {
-    return new AssetComponent().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AssetComponent {
-    return new AssetComponent().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: AssetComponent | PlainMessage<AssetComponent> | undefined, b: AssetComponent | PlainMessage<AssetComponent> | undefined): boolean {
-    return proto3.util.equals(AssetComponent, a, b);
-  }
-}
-
-/**
- * @generated from message world.MissionComponent
- */
-export class MissionComponent extends Message<MissionComponent> {
-  /**
-   * @generated from field: repeated world.MissionWaypoint waypoints = 1;
-   */
-  waypoints: MissionWaypoint[] = [];
-
-  /**
-   * @generated from field: optional uint32 currentWaypoint = 2;
-   */
-  currentWaypoint?: number;
-
-  /**
-   * @generated from field: optional string missionState = 3;
-   */
-  missionState?: string;
-
-  constructor(data?: PartialMessage<MissionComponent>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.MissionComponent";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "waypoints", kind: "message", T: MissionWaypoint, repeated: true },
-    { no: 2, name: "currentWaypoint", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
-    { no: 3, name: "missionState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MissionComponent {
-    return new MissionComponent().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MissionComponent {
-    return new MissionComponent().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MissionComponent {
-    return new MissionComponent().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: MissionComponent | PlainMessage<MissionComponent> | undefined, b: MissionComponent | PlainMessage<MissionComponent> | undefined): boolean {
-    return proto3.util.equals(MissionComponent, a, b);
-  }
-}
-
-/**
  * @generated from message world.Camera
  */
 export class Camera extends Message<Camera> {
@@ -1177,9 +343,9 @@ export class Camera extends Message<Camera> {
  */
 export class CameraComponent extends Message<CameraComponent> {
   /**
-   * @generated from field: repeated world.Camera cams = 1;
+   * @generated from field: repeated world.Camera cameras = 1;
    */
-  cams: Camera[] = [];
+  cameras: Camera[] = [];
 
   constructor(data?: PartialMessage<CameraComponent>) {
     super();
@@ -1189,7 +355,7 @@ export class CameraComponent extends Message<CameraComponent> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "world.CameraComponent";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "cams", kind: "message", T: Camera, repeated: true },
+    { no: 1, name: "cameras", kind: "message", T: Camera, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CameraComponent {
@@ -1210,57 +376,241 @@ export class CameraComponent extends Message<CameraComponent> {
 }
 
 /**
- * @generated from message world.PhyComponent
+ * @generated from message world.DetectionComponent
  */
-export class PhyComponent extends Message<PhyComponent> {
+export class DetectionComponent extends Message<DetectionComponent> {
   /**
-   * @generated from field: int64 frequency = 1;
+   * @generated from field: optional string detectorEntityID = 1;
    */
-  frequency = protoInt64.zero;
+  detectorEntityID?: string;
 
   /**
-   * @generated from field: int32 rssi = 2;
+   * @generated from field: optional string classification = 2;
    */
-  rssi = 0;
+  classification?: string;
 
   /**
-   * @generated from field: int32 lsnr = 3;
+   * @generated from field: optional google.protobuf.Timestamp lastMeasured = 3;
    */
-  lsnr = 0;
+  lastMeasured?: Timestamp;
 
-  /**
-   * @generated from field: string proto = 4;
-   */
-  proto = "";
-
-  constructor(data?: PartialMessage<PhyComponent>) {
+  constructor(data?: PartialMessage<DetectionComponent>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.PhyComponent";
+  static readonly typeName = "world.DetectionComponent";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "frequency", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
-    { no: 2, name: "rssi", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 3, name: "lsnr", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 4, name: "proto", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "detectorEntityID", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "classification", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 3, name: "lastMeasured", kind: "message", T: Timestamp, opt: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PhyComponent {
-    return new PhyComponent().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DetectionComponent {
+    return new DetectionComponent().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PhyComponent {
-    return new PhyComponent().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DetectionComponent {
+    return new DetectionComponent().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PhyComponent {
-    return new PhyComponent().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DetectionComponent {
+    return new DetectionComponent().fromJsonString(jsonString, options);
   }
 
-  static equals(a: PhyComponent | PlainMessage<PhyComponent> | undefined, b: PhyComponent | PlainMessage<PhyComponent> | undefined): boolean {
-    return proto3.util.equals(PhyComponent, a, b);
+  static equals(a: DetectionComponent | PlainMessage<DetectionComponent> | undefined, b: DetectionComponent | PlainMessage<DetectionComponent> | undefined): boolean {
+    return proto3.util.equals(DetectionComponent, a, b);
+  }
+}
+
+/**
+ * @generated from message world.BearingComponent
+ */
+export class BearingComponent extends Message<BearingComponent> {
+  /**
+   * @generated from field: optional double azimuth = 1;
+   */
+  azimuth?: number;
+
+  /**
+   * @generated from field: optional double elevation = 2;
+   */
+  elevation?: number;
+
+  constructor(data?: PartialMessage<BearingComponent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "world.BearingComponent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "azimuth", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 2, name: "elevation", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): BearingComponent {
+    return new BearingComponent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): BearingComponent {
+    return new BearingComponent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): BearingComponent {
+    return new BearingComponent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: BearingComponent | PlainMessage<BearingComponent> | undefined, b: BearingComponent | PlainMessage<BearingComponent> | undefined): boolean {
+    return proto3.util.equals(BearingComponent, a, b);
+  }
+}
+
+/**
+ * @generated from message world.CovarianceMatrix
+ */
+export class CovarianceMatrix extends Message<CovarianceMatrix> {
+  /**
+   * @generated from field: optional double mxx = 1;
+   */
+  mxx?: number;
+
+  /**
+   * @generated from field: optional double mxy = 2;
+   */
+  mxy?: number;
+
+  /**
+   * @generated from field: optional double mxz = 3;
+   */
+  mxz?: number;
+
+  /**
+   * @generated from field: optional double myy = 4;
+   */
+  myy?: number;
+
+  /**
+   * @generated from field: optional double myz = 5;
+   */
+  myz?: number;
+
+  /**
+   * @generated from field: optional double mzz = 6;
+   */
+  mzz?: number;
+
+  constructor(data?: PartialMessage<CovarianceMatrix>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "world.CovarianceMatrix";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "mxx", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 2, name: "mxy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 3, name: "mxz", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 4, name: "myy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 5, name: "myz", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 6, name: "mzz", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CovarianceMatrix {
+    return new CovarianceMatrix().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CovarianceMatrix {
+    return new CovarianceMatrix().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CovarianceMatrix {
+    return new CovarianceMatrix().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CovarianceMatrix | PlainMessage<CovarianceMatrix> | undefined, b: CovarianceMatrix | PlainMessage<CovarianceMatrix> | undefined): boolean {
+    return proto3.util.equals(CovarianceMatrix, a, b);
+  }
+}
+
+/**
+ * @generated from message world.LocationUncertaintyComponent
+ */
+export class LocationUncertaintyComponent extends Message<LocationUncertaintyComponent> {
+  /**
+   * @generated from field: optional world.CovarianceMatrix positionEnuCov = 1;
+   */
+  positionEnuCov?: CovarianceMatrix;
+
+  /**
+   * @generated from field: optional world.CovarianceMatrix velocityEnuCov = 2;
+   */
+  velocityEnuCov?: CovarianceMatrix;
+
+  constructor(data?: PartialMessage<LocationUncertaintyComponent>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "world.LocationUncertaintyComponent";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "positionEnuCov", kind: "message", T: CovarianceMatrix, opt: true },
+    { no: 2, name: "velocityEnuCov", kind: "message", T: CovarianceMatrix, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LocationUncertaintyComponent {
+    return new LocationUncertaintyComponent().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LocationUncertaintyComponent {
+    return new LocationUncertaintyComponent().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LocationUncertaintyComponent {
+    return new LocationUncertaintyComponent().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LocationUncertaintyComponent | PlainMessage<LocationUncertaintyComponent> | undefined, b: LocationUncertaintyComponent | PlainMessage<LocationUncertaintyComponent> | undefined): boolean {
+    return proto3.util.equals(LocationUncertaintyComponent, a, b);
+  }
+}
+
+/**
+ * @generated from message world.Geometry
+ */
+export class Geometry extends Message<Geometry> {
+  /**
+   * @generated from field: bytes wkb = 1;
+   */
+  wkb = new Uint8Array(0);
+
+  constructor(data?: PartialMessage<Geometry>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "world.Geometry";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "wkb", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Geometry {
+    return new Geometry().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Geometry {
+    return new Geometry().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Geometry {
+    return new Geometry().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Geometry | PlainMessage<Geometry> | undefined, b: Geometry | PlainMessage<Geometry> | undefined): boolean {
+    return proto3.util.equals(Geometry, a, b);
   }
 }
 
@@ -1269,16 +619,6 @@ export class PhyComponent extends Message<PhyComponent> {
  */
 export class ListEntitiesRequest extends Message<ListEntitiesRequest> {
   /**
-   * list entities within a different entities geo boundaries
-   * this updates the watchlist when that entity moves.
-   *
-   * @generated from field: optional world.EntityRef observer = 1;
-   */
-  observer?: EntityRef;
-
-  /**
-   * instead of observing from the an entity, just directly specify a geometry to observe
-   *
    * @generated from field: optional world.Geometry geo = 2;
    */
   geo?: Geometry;
@@ -1291,7 +631,6 @@ export class ListEntitiesRequest extends Message<ListEntitiesRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "world.ListEntitiesRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "observer", kind: "message", T: EntityRef, opt: true },
     { no: 2, name: "geo", kind: "message", T: Geometry, opt: true },
   ]);
 
@@ -1358,13 +697,6 @@ export class EntityChangeRequest extends Message<EntityChangeRequest> {
    */
   changes: Entity[] = [];
 
-  /**
-   * dedup
-   *
-   * @generated from field: optional string changeid = 2;
-   */
-  changeid?: string;
-
   constructor(data?: PartialMessage<EntityChangeRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1374,7 +706,6 @@ export class EntityChangeRequest extends Message<EntityChangeRequest> {
   static readonly typeName = "world.EntityChangeRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "changes", kind: "message", T: Entity, repeated: true },
-    { no: 2, name: "changeid", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): EntityChangeRequest {
@@ -1481,80 +812,6 @@ export class EntityChangeEvent extends Message<EntityChangeEvent> {
 }
 
 /**
- * @generated from message world.ObserverRequest
- */
-export class ObserverRequest extends Message<ObserverRequest> {
-  constructor(data?: PartialMessage<ObserverRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.ObserverRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ObserverRequest {
-    return new ObserverRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ObserverRequest {
-    return new ObserverRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ObserverRequest {
-    return new ObserverRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ObserverRequest | PlainMessage<ObserverRequest> | undefined, b: ObserverRequest | PlainMessage<ObserverRequest> | undefined): boolean {
-    return proto3.util.equals(ObserverRequest, a, b);
-  }
-}
-
-/**
- * @generated from message world.ObserverState
- */
-export class ObserverState extends Message<ObserverState> {
-  /**
-   * @generated from field: world.Geometry geo = 1;
-   */
-  geo?: Geometry;
-
-  /**
-   * @generated from field: optional google.protobuf.Timestamp viewHistory = 2;
-   */
-  viewHistory?: Timestamp;
-
-  constructor(data?: PartialMessage<ObserverState>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.ObserverState";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "geo", kind: "message", T: Geometry },
-    { no: 2, name: "viewHistory", kind: "message", T: Timestamp, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ObserverState {
-    return new ObserverState().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ObserverState {
-    return new ObserverState().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ObserverState {
-    return new ObserverState().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ObserverState | PlainMessage<ObserverState> | undefined, b: ObserverState | PlainMessage<ObserverState> | undefined): boolean {
-    return proto3.util.equals(ObserverState, a, b);
-  }
-}
-
-/**
  * @generated from message world.GetEntityRequest
  */
 export class GetEntityRequest extends Message<GetEntityRequest> {
@@ -1629,285 +886,76 @@ export class GetEntityResponse extends Message<GetEntityResponse> {
 }
 
 /**
- * @generated from message world.ListControllersRequest
+ * @generated from message world.ObserverRequest
  */
-export class ListControllersRequest extends Message<ListControllersRequest> {
-  constructor(data?: PartialMessage<ListControllersRequest>) {
+export class ObserverRequest extends Message<ObserverRequest> {
+  constructor(data?: PartialMessage<ObserverRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.ListControllersRequest";
+  static readonly typeName = "world.ObserverRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListControllersRequest {
-    return new ListControllersRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ObserverRequest {
+    return new ObserverRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListControllersRequest {
-    return new ListControllersRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ObserverRequest {
+    return new ObserverRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListControllersRequest {
-    return new ListControllersRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ObserverRequest {
+    return new ObserverRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ListControllersRequest | PlainMessage<ListControllersRequest> | undefined, b: ListControllersRequest | PlainMessage<ListControllersRequest> | undefined): boolean {
-    return proto3.util.equals(ListControllersRequest, a, b);
+  static equals(a: ObserverRequest | PlainMessage<ObserverRequest> | undefined, b: ObserverRequest | PlainMessage<ObserverRequest> | undefined): boolean {
+    return proto3.util.equals(ObserverRequest, a, b);
   }
 }
 
 /**
- * @generated from message world.Controller
+ * @generated from message world.ObserverState
  */
-export class Controller extends Message<Controller> {
+export class ObserverState extends Message<ObserverState> {
   /**
-   * @generated from field: string id = 1;
+   * @generated from field: world.Geometry geo = 1;
    */
-  id = "";
+  geo?: Geometry;
 
   /**
-   * @generated from field: string name = 2;
+   * @generated from field: optional google.protobuf.Timestamp viewHistory = 2;
    */
-  name = "";
+  viewHistory?: Timestamp;
 
-  /**
-   * @generated from field: bool connected = 3;
-   */
-  connected = false;
-
-  constructor(data?: PartialMessage<Controller>) {
+  constructor(data?: PartialMessage<ObserverState>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.Controller";
+  static readonly typeName = "world.ObserverState";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "connected", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 1, name: "geo", kind: "message", T: Geometry },
+    { no: 2, name: "viewHistory", kind: "message", T: Timestamp, opt: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Controller {
-    return new Controller().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ObserverState {
+    return new ObserverState().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Controller {
-    return new Controller().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ObserverState {
+    return new ObserverState().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Controller {
-    return new Controller().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ObserverState {
+    return new ObserverState().fromJsonString(jsonString, options);
   }
 
-  static equals(a: Controller | PlainMessage<Controller> | undefined, b: Controller | PlainMessage<Controller> | undefined): boolean {
-    return proto3.util.equals(Controller, a, b);
-  }
-}
-
-/**
- * @generated from message world.ListControllersResponse
- */
-export class ListControllersResponse extends Message<ListControllersResponse> {
-  /**
-   * @generated from field: repeated world.Controller controllers = 1;
-   */
-  controllers: Controller[] = [];
-
-  constructor(data?: PartialMessage<ListControllersResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.ListControllersResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "controllers", kind: "message", T: Controller, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListControllersResponse {
-    return new ListControllersResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListControllersResponse {
-    return new ListControllersResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListControllersResponse {
-    return new ListControllersResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ListControllersResponse | PlainMessage<ListControllersResponse> | undefined, b: ListControllersResponse | PlainMessage<ListControllersResponse> | undefined): boolean {
-    return proto3.util.equals(ListControllersResponse, a, b);
-  }
-}
-
-/**
- * @generated from message world.GetTimelineRequest
- */
-export class GetTimelineRequest extends Message<GetTimelineRequest> {
-  constructor(data?: PartialMessage<GetTimelineRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.GetTimelineRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTimelineRequest {
-    return new GetTimelineRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTimelineRequest {
-    return new GetTimelineRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTimelineRequest {
-    return new GetTimelineRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetTimelineRequest | PlainMessage<GetTimelineRequest> | undefined, b: GetTimelineRequest | PlainMessage<GetTimelineRequest> | undefined): boolean {
-    return proto3.util.equals(GetTimelineRequest, a, b);
-  }
-}
-
-/**
- * @generated from message world.GetTimelineResponse
- */
-export class GetTimelineResponse extends Message<GetTimelineResponse> {
-  /**
-   * @generated from field: google.protobuf.Timestamp min = 1;
-   */
-  min?: Timestamp;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp max = 2;
-   */
-  max?: Timestamp;
-
-  /**
-   * @generated from field: bool frozen = 3;
-   */
-  frozen = false;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp at = 4;
-   */
-  at?: Timestamp;
-
-  constructor(data?: PartialMessage<GetTimelineResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.GetTimelineResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "min", kind: "message", T: Timestamp },
-    { no: 2, name: "max", kind: "message", T: Timestamp },
-    { no: 3, name: "frozen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 4, name: "at", kind: "message", T: Timestamp },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTimelineResponse {
-    return new GetTimelineResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTimelineResponse {
-    return new GetTimelineResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTimelineResponse {
-    return new GetTimelineResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: GetTimelineResponse | PlainMessage<GetTimelineResponse> | undefined, b: GetTimelineResponse | PlainMessage<GetTimelineResponse> | undefined): boolean {
-    return proto3.util.equals(GetTimelineResponse, a, b);
-  }
-}
-
-/**
- * @generated from message world.MoveTimelineRequest
- */
-export class MoveTimelineRequest extends Message<MoveTimelineRequest> {
-  /**
-   * @generated from field: bool freeze = 1;
-   */
-  freeze = false;
-
-  /**
-   * @generated from field: google.protobuf.Timestamp at = 2;
-   */
-  at?: Timestamp;
-
-  constructor(data?: PartialMessage<MoveTimelineRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.MoveTimelineRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "freeze", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "at", kind: "message", T: Timestamp },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MoveTimelineRequest {
-    return new MoveTimelineRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MoveTimelineRequest {
-    return new MoveTimelineRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MoveTimelineRequest {
-    return new MoveTimelineRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: MoveTimelineRequest | PlainMessage<MoveTimelineRequest> | undefined, b: MoveTimelineRequest | PlainMessage<MoveTimelineRequest> | undefined): boolean {
-    return proto3.util.equals(MoveTimelineRequest, a, b);
-  }
-}
-
-/**
- * @generated from message world.MoveTimelineResponse
- */
-export class MoveTimelineResponse extends Message<MoveTimelineResponse> {
-  /**
-   * @generated from field: google.protobuf.Timestamp current = 1;
-   */
-  current?: Timestamp;
-
-  constructor(data?: PartialMessage<MoveTimelineResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "world.MoveTimelineResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "current", kind: "message", T: Timestamp },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MoveTimelineResponse {
-    return new MoveTimelineResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MoveTimelineResponse {
-    return new MoveTimelineResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MoveTimelineResponse {
-    return new MoveTimelineResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: MoveTimelineResponse | PlainMessage<MoveTimelineResponse> | undefined, b: MoveTimelineResponse | PlainMessage<MoveTimelineResponse> | undefined): boolean {
-    return proto3.util.equals(MoveTimelineResponse, a, b);
+  static equals(a: ObserverState | PlainMessage<ObserverState> | undefined, b: ObserverState | PlainMessage<ObserverState> | undefined): boolean {
+    return proto3.util.equals(ObserverState, a, b);
   }
 }
 

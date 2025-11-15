@@ -1,4 +1,4 @@
-import { Show, onMount, onCleanup, createSignal, createEffect, createMemo, For } from 'solid-js';
+import { Show, onMount, onCleanup, createSignal, createEffect, createMemo } from 'solid-js';
 import { Entity } from '../proto/world_pb';
 import feather from 'feather-icons';
 import milsymbol from 'milsymbol';
@@ -154,8 +154,8 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 
 	const getHeaderIcon = () => {
 		const entity = detailedEntity();
-		if (entity?.sym?.milStd2525C) {
-			const symbolIcon = new milsymbol.Symbol(entity.sym.milStd2525C, {
+		if (entity?.symbol?.milStd2525C) {
+			const symbolIcon = new milsymbol.Symbol(entity.symbol.milStd2525C, {
 				size: 20,
 				fill: true,
 				frame: true
@@ -200,119 +200,119 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 		);
 	};
 
-	const formatTimestamp = (timestamp: any) => {
-		if (!timestamp?.seconds) return 'Unknown';
+	// const formatTimestamp = (timestamp: any) => {
+	// 	if (!timestamp?.seconds) return 'Unknown';
 
-		const date = new Date(Number(timestamp.seconds) * 1000);
-		const now = new Date();
-		const diffMs = now.getTime() - date.getTime();
-		const diffMinutes = Math.floor(diffMs / (1000 * 60));
-		const diffHours = Math.floor(diffMinutes / 60);
-		const diffDays = Math.floor(diffHours / 24);
+	// 	const date = new Date(Number(timestamp.seconds) * 1000);
+	// 	const now = new Date();
+	// 	const diffMs = now.getTime() - date.getTime();
+	// 	const diffMinutes = Math.floor(diffMs / (1000 * 60));
+	// 	const diffHours = Math.floor(diffMinutes / 60);
+	// 	const diffDays = Math.floor(diffHours / 24);
 
-		if (diffMinutes < 1) return 'Just now';
-		if (diffMinutes < 60) return `${diffMinutes} minute${diffMinutes === 1 ? '' : 's'} ago`;
-		if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
-		return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
-	};
+	// 	if (diffMinutes < 1) return 'Just now';
+	// 	if (diffMinutes < 60) return `${diffMinutes} minute${diffMinutes === 1 ? '' : 's'} ago`;
+	// 	if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
+	// 	return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
+	// };
 
-	const renderAssetSection = () => {
-		const entity = detailedEntity();
-		if (!entity?.asset) return null;
+	// const renderAssetSection = () => {
+	// 	const entity = detailedEntity();
+	// 	if (!entity?.asset) return null;
 
-		return (
-			<div class="component-section">
-				<h4 class="component-title">Asset</h4>
-				<div class="component-fields">
-					{/* Battery Progress Bar */}
-					<Show when={entity.asset.batteryPercent !== undefined}>
-						<div class="entity-field">
-							<label>Battery:</label>
-							<div class="battery-container">
-								<div class="battery-bar">
-									<div
-										class={`battery-fill ${entity.asset.batteryPercent! < 20 ? 'low' : entity.asset.batteryPercent! < 50 ? 'medium' : 'high'}`}
-										style={`width: ${Math.max(0, Math.min(100, entity.asset.batteryPercent!))}%`}
-									></div>
-								</div>
-								<span class="battery-text">{entity.asset.batteryPercent}%</span>
-							</div>
-						</div>
-					</Show>
+	// 	return (
+	// 		<div class="component-section">
+	// 			<h4 class="component-title">Asset</h4>
+	// 			<div class="component-fields">
+	// 				{/* Battery Progress Bar */}
+	// 				<Show when={entity.asset.batteryPercent !== undefined}>
+	// 					<div class="entity-field">
+	// 						<label>Battery:</label>
+	// 						<div class="battery-container">
+	// 							<div class="battery-bar">
+	// 								<div
+	// 									class={`battery-fill ${entity.asset.batteryPercent! < 20 ? 'low' : entity.asset.batteryPercent! < 50 ? 'medium' : 'high'}`}
+	// 									style={`width: ${Math.max(0, Math.min(100, entity.asset.batteryPercent!))}%`}
+	// 								></div>
+	// 							</div>
+	// 							<span class="battery-text">{entity.asset.batteryPercent}%</span>
+	// 						</div>
+	// 					</div>
+	// 				</Show>
 
-					{/* Last Seen */}
-					<Show when={entity.asset.lastSeen}>
-						<div class="entity-field">
-							<label>Last Seen:</label>
-							<span>{formatTimestamp(entity.asset.lastSeen)}</span>
-						</div>
-					</Show>
+	// 				{/* Last Seen */}
+	// 				<Show when={entity.asset.lastSeen}>
+	// 					<div class="entity-field">
+	// 						<label>Last Seen:</label>
+	// 						<span>{formatTimestamp(entity.asset.lastSeen)}</span>
+	// 					</div>
+	// 				</Show>
 
-					{/* Mavlink - Flight Mode only */}
-					<Show when={entity.asset.mavlink?.flightMode}>
-						<div class="entity-field">
-							<label>Flight Mode:</label>
-							<span>{entity.asset.mavlink!.flightMode}</span>
-						</div>
-					</Show>
-				</div>
-			</div>
-		);
-	};
+	// 				{/* Mavlink - Flight Mode only */}
+	// 				<Show when={entity.asset.mavlink?.flightMode}>
+	// 					<div class="entity-field">
+	// 						<label>Flight Mode:</label>
+	// 						<span>{entity.asset.mavlink!.flightMode}</span>
+	// 					</div>
+	// 				</Show>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// };
 
-	const renderPhySection = () => {
-		const entity = detailedEntity();
-		if (!entity?.phy) return null;
+	// const renderPhySection = () => {
+	// 	const entity = detailedEntity();
+	// 	if (!entity?.phy) return null;
 
-		return (
-			<div class="component-section">
-				<h4 class="component-title">Physical Layer</h4>
-				<div class="component-fields">
-					{/* Frequency */}
-					<Show when={entity.phy.frequency !== undefined && entity.phy.frequency !== 0n}>
-						<div class="entity-field">
-							<label>Frequency:</label>
-							<span>{Number(entity.phy.frequency).toLocaleString()} Hz</span>
-						</div>
-					</Show>
+	// 	return (
+	// 		<div class="component-section">
+	// 			<h4 class="component-title">Physical Layer</h4>
+	// 			<div class="component-fields">
+	// 				{/* Frequency */}
+	// 				<Show when={entity.phy.frequency !== undefined && entity.phy.frequency !== 0n}>
+	// 					<div class="entity-field">
+	// 						<label>Frequency:</label>
+	// 						<span>{Number(entity.phy.frequency).toLocaleString()} Hz</span>
+	// 					</div>
+	// 				</Show>
 
-					{/* RSSI */}
-					<Show when={entity.phy.rssi !== undefined && entity.phy.rssi !== 0}>
-						<div class="entity-field">
-							<label>RSSI:</label>
-							<span>{entity.phy.rssi} dBm</span>
-						</div>
-					</Show>
+	// 				{/* RSSI */}
+	// 				<Show when={entity.phy.rssi !== undefined && entity.phy.rssi !== 0}>
+	// 					<div class="entity-field">
+	// 						<label>RSSI:</label>
+	// 						<span>{entity.phy.rssi} dBm</span>
+	// 					</div>
+	// 				</Show>
 
-					{/* LSNR */}
-					<Show when={entity.phy.lsnr !== undefined && entity.phy.lsnr !== 0}>
-						<div class="entity-field">
-							<label>SNR:</label>
-							<span>{entity.phy.lsnr} dB</span>
-						</div>
-					</Show>
+	// 				{/* LSNR */}
+	// 				<Show when={entity.phy.lsnr !== undefined && entity.phy.lsnr !== 0}>
+	// 					<div class="entity-field">
+	// 						<label>SNR:</label>
+	// 						<span>{entity.phy.lsnr} dB</span>
+	// 					</div>
+	// 				</Show>
 
-					{/* Protocol */}
-					<Show when={entity.phy.proto && entity.phy.proto.trim() !== ""}>
-						<div class="entity-field">
-							<label>Protocol:</label>
-							<span>{entity.phy.proto}</span>
-						</div>
-					</Show>
-				</div>
-			</div>
-		);
-	};
+	// 				{/* Protocol */}
+	// 				<Show when={entity.phy.proto && entity.phy.proto.trim() !== ""}>
+	// 					<div class="entity-field">
+	// 						<label>Protocol:</label>
+	// 						<span>{entity.phy.proto}</span>
+	// 					</div>
+	// 				</Show>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// };
 
 	const renderCameraSection = () => {
 		const entity = detailedEntity();
-		if (!entity?.camera?.cams || entity.camera.cams.length === 0) return null;
+		if (!entity?.camera?.cameras || entity.camera.cameras.length === 0) return null;
 
 		return (
 			<div class="component-section camera-section">
 				<h4 class="component-title">Camera View</h4>
 				<div class="camera-grid">
-					{entity.camera.cams.map((camera) => (
+					{entity.camera.cameras.map((camera) => (
 						<div class="camera-item">
 							<div class="camera-view">
 								<img
@@ -365,12 +365,12 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 					<label>longitude:</label>
 					<span class={props.isMovingEntity ? 'moving-coordinate' : ''}>{formatCoordinate(currentLng)}</span>
 				</div>
-				{entity.track?.elevation !== undefined && (
+				{/* {entity.track?.elevation !== undefined && (
 					<div class="entity-field">
 						<label>elevation:</label>
 						<span>{entity.track.elevation}</span>
 					</div>
-				)}
+				)} */}
 			</div>
 		);
 	};
@@ -426,22 +426,22 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 	const renderIdTab = () => (
 		<div>
 			{/* Symbol Component */}
-			{renderComponentSection('Symbol', detailedEntity()?.sym)}
+			{renderComponentSection('Symbol', detailedEntity()?.symbol)}
 
 			{/* Controller */}
 			{renderControllerSection()}
 
 			{/* Asset Component */}
-			{renderAssetSection()}
+			{/* {renderAssetSection()} */}
 
 			{/* Phy Component */}
-			{renderPhySection()}
+			{/* {renderPhySection()} */}
 
 			{/* GeoSpatial Component */}
 			{renderGeospatialSection()}
 
 			{/* Taskable Component */}
-			<Show when={detailedEntity()?.taskable?.Taskables && detailedEntity()!.taskable!.Taskables.length > 0}>
+			{/* <Show when={detailedEntity()?.taskable?.Taskables && detailedEntity()!.taskable!.Taskables.length > 0}>
 				<div class="component-section">
 					<h4 class="component-title">Taskable</h4>
 					<div class="component-fields">
@@ -470,7 +470,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 						</For>
 					</div>
 				</div>
-			</Show>
+			</Show> */}
 
 			{/* Camera Views - Always at bottom */}
 			{renderCameraSection()}
@@ -483,7 +483,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 			{renderGeospatialSection()}
 
 			{/* Track Component */}
-			{renderComponentSection('Track', detailedEntity()?.track)}
+			{/* {renderComponentSection('Track', detailedEntity()?.track)} */}
 
 			{/* Lifetime */}
 			<Show when={detailedEntity()?.lifetime}>
@@ -507,7 +507,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 			</Show>
 
 			{/* Signals Component */}
-			<Show when={detailedEntity()?.signals && detailedEntity()!.signals.length > 0}>
+			{/* <Show when={detailedEntity()?.signals && detailedEntity()!.signals.length > 0}>
 				<div class="component-section">
 					<h4 class="component-title">Signals</h4>
 					<div class="component-fields">
@@ -519,7 +519,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 						))}
 					</div>
 				</div>
-			</Show>
+			</Show> */}
 		</div>
 	);
 
@@ -550,7 +550,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 			{renderComponentSection('Controller', detailedEntity()?.controller)}
 
 			{/* Mavlink Details */}
-			<Show when={detailedEntity()?.asset?.mavlink}>
+			{/* <Show when={detailedEntity()?.asset?.mavlink}>
 				<div class="component-section">
 					<h4 class="component-title">Mavlink</h4>
 					<div class="component-fields">
@@ -562,7 +562,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 						))}
 					</div>
 				</div>
-			</Show>
+			</Show> */}
 		</div>
 	);
 
@@ -572,7 +572,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 				<div class="entity-sidebar-header">
 					<h3>
 						<span innerHTML={getHeaderIcon()}></span>
-						<span>{detailedEntity()?.description || 'ENTITY DETAILS'}</span>
+						<span>{/* detailedEntity()?.description || */ 'ENTITY DETAILS'}</span>
 					</h3>
 					<button class="close-button" onClick={props.onClose}>✕</button>
 				</div>

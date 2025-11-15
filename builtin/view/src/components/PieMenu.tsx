@@ -1,13 +1,13 @@
 import { createSignal, createEffect, For, onCleanup, createMemo } from 'solid-js';
-import { TaskableOption } from '../proto/world_pb';
+// import { TaskableOption } from '../proto/world_pb'; // TaskableOption no longer exists
 import './PieMenu.css';
 
 export interface PieMenuProps {
   x: number;
   y: number;
   visible: boolean;
-  taskables?: TaskableOption[];
-  onActionClick: (taskable: TaskableOption) => void;
+  taskables?: any[]; // TaskableOption removed from proto
+  onActionClick: (taskable: any) => void;
   onTestClick: () => void;
   onClose: () => void;
 }

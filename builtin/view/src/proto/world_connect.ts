@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { EntityChangeEvent, EntityChangeRequest, EntityChangeResponse, GetEntityRequest, GetEntityResponse, GetTimelineRequest, GetTimelineResponse, ListControllersRequest, ListControllersResponse, ListEntitiesRequest, ListEntitiesResponse, MoveTimelineRequest, MoveTimelineResponse, ObserverRequest, ObserverState } from "./world_pb.js";
+import { EntityChangeEvent, EntityChangeRequest, EntityChangeResponse, GetEntityRequest, GetEntityResponse, ListEntitiesRequest, ListEntitiesResponse, ObserverRequest, ObserverState } from "./world_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -67,51 +67,6 @@ export const WorldService = {
       name: "Observe",
       I: ObserverRequest,
       O: ObserverState,
-      kind: MethodKind.ServerStreaming,
-    },
-  }
-} as const;
-
-/**
- * @generated from service world.ManagmentService
- */
-export const ManagmentService = {
-  typeName: "world.ManagmentService",
-  methods: {
-    /**
-     * @generated from rpc world.ManagmentService.ListControllers
-     */
-    listControllers: {
-      name: "ListControllers",
-      I: ListControllersRequest,
-      O: ListControllersResponse,
-      kind: MethodKind.Unary,
-    },
-  }
-} as const;
-
-/**
- * @generated from service world.TimelineService
- */
-export const TimelineService = {
-  typeName: "world.TimelineService",
-  methods: {
-    /**
-     * @generated from rpc world.TimelineService.MoveTimeline
-     */
-    moveTimeline: {
-      name: "MoveTimeline",
-      I: MoveTimelineRequest,
-      O: MoveTimelineResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc world.TimelineService.GetTimeline
-     */
-    getTimeline: {
-      name: "GetTimeline",
-      I: GetTimelineRequest,
-      O: GetTimelineResponse,
       kind: MethodKind.ServerStreaming,
     },
   }

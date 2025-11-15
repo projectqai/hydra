@@ -13,12 +13,6 @@ goals:
  - recover from single hardware failure
  - provides hooks etc for analytics, observability, forensics
 
-non-goals:
-
- - hard-realtime fire/weapons guidance
-
-
-
 
 Working with Hydra
 ------------------

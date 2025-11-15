@@ -131,8 +131,8 @@ export class WorldService {
 
 	async pushEntity(entity: Entity): Promise<EntityChangeResponse> {
 		const request = new EntityChangeRequest({
-			changes: [entity],
-			changeid: `move-${entity.id}-${Date.now()}`
+			changes: [entity]
+			// changeid property no longer exists in EntityChangeRequest
 		});
 
 		return await this.client.push(request);

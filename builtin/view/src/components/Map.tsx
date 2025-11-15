@@ -4,7 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import milsymbol from 'milsymbol';
 import { WorldService, boundsToGeometry } from '../services/worldService';
 import { TimelineService } from '../services/timelineService';
-import { EntityChangeEvent, GetTimelineResponse } from '../proto/world_pb';
+import { EntityChangeEvent } from '../proto/world_pb';
+import { GetTimelineResponse } from '../proto/timeline_pb';
 import { Timestamp } from '@bufbuild/protobuf';
 import EntitySidebar from './EntitySidebar';
 
@@ -207,8 +208,8 @@ export default function Map(props: MapProps) {
 
 	const getSymbolFromEntity = (entity: any): string | null => {
 		// Use the symbol component with milStd2525C code
-		if (entity.sym?.milStd2525C) {
-			return entity.sym.milStd2525C;
+		if (entity.symbol?.milStd2525C) {
+			return entity.symbol.milStd2525C;
 		}
 
 		// No default symbol - return null if no symbol component
@@ -231,8 +232,59 @@ export default function Map(props: MapProps) {
 		return currentTime > untilMs;
 	};
 
-	const getCachedSymbolSvg = (symbolCode: string, entity: any): string => {
-		const cacheKey = `${symbolCode}-${entity.track?.azimuth || 0}`;
+	const createBearingArrowSvg = (azimuth: number, elevation?: number): string => {
+		// Create an arrow pointing in the direction of the bearing
+		const arrowStartDistance = 20; // Start arrow away from center
+		const arrowLength = 60; // Length of the arrow from start point
+		const arrowWidth = 4;
+
+		// Convert azimuth to radians (0° = North, clockwise)
+		const azimuthRadians = (azimuth * Math.PI) / 180;
+
+		// Center the SVG viewBox on the symbol
+		const centerX = 75;
+		const centerY = 75;
+
+		// Calculate arrow start point (away from symbol)
+		const startX = centerX + Math.sin(azimuthRadians) * arrowStartDistance;
+		const startY = centerY - Math.cos(azimuthRadians) * arrowStartDistance;
+
+		// Calculate arrow end point
+		const endX = centerX + Math.sin(azimuthRadians) * (arrowStartDistance + arrowLength);
+		const endY = centerY - Math.cos(azimuthRadians) * (arrowStartDistance + arrowLength);
+
+		// Calculate arrowhead points
+		const headLength = 8;
+		const headAngle = Math.PI / 6; // 30 degrees
+
+		const headLeft = {
+			x: endX - headLength * Math.sin(azimuthRadians - headAngle),
+			y: endY + headLength * Math.cos(azimuthRadians - headAngle)
+		};
+		const headRight = {
+			x: endX - headLength * Math.sin(azimuthRadians + headAngle),
+			y: endY + headLength * Math.cos(azimuthRadians + headAngle)
+		};
+
+		// Color based on elevation if present (red = looking down, blue = looking up, yellow = level)
+		let color = '#FFD700'; // Default yellow
+		if (elevation !== undefined) {
+			if (elevation < -10) {
+				color = '#FF4444'; // Red for looking down
+			} else if (elevation > 10) {
+				color = '#4444FF'; // Blue for looking up
+			}
+		}
+
+		return `<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: -60px; left: -60px; pointer-events: none; z-index: 0;">
+			<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="${color}" stroke-width="${arrowWidth}" stroke-linecap="round" opacity="0.8"/>
+			<polygon points="${endX},${endY} ${headLeft.x},${headLeft.y} ${headRight.x},${headRight.y}" fill="${color}" opacity="0.8"/>
+		</svg>`;
+	};
+
+	const getCachedSymbolSvg = (symbolCode: string, _entity: any): string => {
+		// entity.track no longer exists - use symbolCode only for cache key
+		const cacheKey = `${symbolCode}-0`;
 
 		if (symbolCache.has(cacheKey)) {
 			return symbolCache.get(cacheKey)!;
@@ -253,19 +305,22 @@ export default function Map(props: MapProps) {
 			}
 
 			symbolSvg = symbolIcon.asSVG();
-		} else if (entity.track) {
-			// Create small dot with direction line for TrackComponent entities
-			const azimuth = entity.track.azimuth || 0;
-			const azimuthRadians = (azimuth * Math.PI) / 180;
-			const lineLength = 15;
-			const endX = Math.sin(azimuthRadians) * lineLength;
-			const endY = -Math.cos(azimuthRadians) * lineLength;
-
-			symbolSvg = `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="10" cy="10" r="3" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
-        <line x1="10" y1="10" x2="${10 + endX}" y2="${10 + endY}" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round"/>
-      </svg>`;
-		} else {
+		}
+		// entity.track no longer exists - commented out track-based dot rendering
+		// else if (entity.track) {
+		// 	// Create small dot with direction line for TrackComponent entities
+		// 	const azimuth = entity.track.azimuth || 0;
+		// 	const azimuthRadians = (azimuth * Math.PI) / 180;
+		// 	const lineLength = 15;
+		// 	const endX = Math.sin(azimuthRadians) * lineLength;
+		// 	const endY = -Math.cos(azimuthRadians) * lineLength;
+		//
+		// 	symbolSvg = `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        // <circle cx="10" cy="10" r="3" fill="#ff6b6b" stroke="#fff" stroke-width="1"/>
+        // <line x1="10" y1="10" x2="${10 + endX}" y2="${10 + endY}" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round"/>
+        // </svg>`;
+		// }
+		else {
 			symbolSvg = '';
 		}
 
@@ -333,8 +388,9 @@ export default function Map(props: MapProps) {
 			const { latitude, longitude } = event.entity.geo;
 			const symbolCode = getSymbolFromEntity(event.entity);
 
-			// Skip entities without symbols unless they have a TrackComponent
-			if (!symbolCode && !event.entity.track) {
+			// entity.track no longer exists - skip entities without symbols
+			// if (!symbolCode && !event.entity.track) {
+			if (!symbolCode) {
 				return;
 			}
 
@@ -342,9 +398,13 @@ export default function Map(props: MapProps) {
 			const symbolSvg = getCachedSymbolSvg(symbolCode || '', event.entity);
 
 			// Build label text efficiently
-			const entityName = event.entity.description || '';
-			const elevation = event.entity.track?.elevation;
-			const speed = event.entity.track?.speed;
+			// entity.description no longer exists - use empty string
+			const entityName = '';
+			// entity.track no longer exists - elevation and speed no longer available
+			// const elevation = event.entity.track?.elevation;
+			// const speed = event.entity.track?.speed;
+			const elevation = undefined;
+			const speed = undefined;
 
 			let labelText = entityName;
 			if (elevation !== undefined || speed !== undefined) {
@@ -360,9 +420,17 @@ export default function Map(props: MapProps) {
 			}
 
 			// Calculate sizes and anchors
-			const isTrackOnly = !symbolCode && event.entity.track;
+			// entity.track no longer exists
+			// const isTrackOnly = !symbolCode && event.entity.track;
+			const isTrackOnly = false;
 			const symbolSize = isTrackOnly ? 20 : 30;
 			const anchor = isTrackOnly ? 10 : 15;
+
+			// Check if entity has bearing component
+			const hasBearing = event.entity.bearing?.azimuth !== undefined;
+			const bearingArrowSvg = hasBearing
+				? createBearingArrowSvg(event.entity.bearing!.azimuth!, event.entity.bearing?.elevation)
+				: '';
 
 			let iconHtml: string;
 			let iconSizeValue: [number, number];
@@ -370,13 +438,19 @@ export default function Map(props: MapProps) {
 
 			if (labelText) {
 				iconHtml = `<div style="display: flex; align-items: center; gap: 4px; width: max-content; background: transparent;">
-             <div style="width: ${symbolSize}px; height: ${symbolSize}px; flex-shrink: 0;">${symbolSvg}</div>
+             <div style="position: relative; width: ${symbolSize}px; height: ${symbolSize}px; flex-shrink: 0;">
+               ${bearingArrowSvg}
+               <div style="position: relative; z-index: 1;">${symbolSvg}</div>
+             </div>
              <span style="font-size: 12px; font-weight: 500; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.8), 1px -1px 2px rgba(0,0,0,0.8), -1px 1px 2px rgba(0,0,0,0.8); padding: 2px 4px; white-space: nowrap; font-family: 'CommitMono', monospace;">${labelText}</span>
            </div>`;
 				iconSizeValue = [200, symbolSize];
 				iconAnchorValue = [anchor, anchor];
 			} else {
-				iconHtml = symbolSvg;
+				iconHtml = `<div style="position: relative; width: ${symbolSize}px; height: ${symbolSize}px;">
+             ${bearingArrowSvg}
+             <div style="position: relative; z-index: 1;">${symbolSvg}</div>
+           </div>`;
 				iconSizeValue = [symbolSize, symbolSize];
 				iconAnchorValue = [anchor, anchor];
 			}
@@ -420,62 +494,64 @@ export default function Map(props: MapProps) {
 			}
 
 			// Handle trail updates more efficiently
-			const hasTrail = event.entity.track?.trail && event.entity.track.trail.length > 1;
-			const existingTrail = entityTrails.get(entityId);
+			// entity.track no longer exists - trail functionality disabled
+			// const hasTrail = event.entity.track?.trail && event.entity.track.trail.length > 1;
+			// const existingTrail = entityTrails.get(entityId);
 
-			if (hasTrail) {
-				const trailPoints: [number, number][] = event.entity.track!.trail.map((point: any) =>
-					[point.latitude, point.longitude]
-				);
+			// if (hasTrail) {
+			// 	const trailPoints: [number, number][] = event.entity.track!.trail.map((point: any) =>
+			// 		[point.latitude, point.longitude]
+			// 	);
 
-				if (existingTrail) {
-					// Update existing trail
-					existingTrail.setLatLngs(trailPoints);
-				} else {
-					// Create new trail
-					const trail = L.polyline(trailPoints, {
-						color: '#000000',
-						weight: 2,
-						opacity: 0.7
-					}).addTo(map);
+			// 	if (existingTrail) {
+			// 		// Update existing trail
+			// 		existingTrail.setLatLngs(trailPoints);
+			// 	} else {
+			// 		// Create new trail
+			// 		const trail = L.polyline(trailPoints, {
+			// 			color: '#000000',
+			// 			weight: 2,
+			// 			opacity: 0.7
+			// 		}).addTo(map);
 
-					entityTrails.set(entityId, trail);
-				}
-			} else if (existingTrail) {
-				// Remove trail if entity no longer has one
-				map.removeLayer(existingTrail);
-				entityTrails.delete(entityId);
-			}
+			// 		entityTrails.set(entityId, trail);
+			// 	}
+			// } else if (existingTrail) {
+			// 	// Remove trail if entity no longer has one
+			// 	map.removeLayer(existingTrail);
+			// 	entityTrails.delete(entityId);
+			// }
 
 			// Handle mission waypoint trails
-			const hasMission = event.entity.mission?.waypoints && event.entity.mission.waypoints.length > 1;
-			const existingMissionTrail = missionTrails.get(entityId);
+			// entity.mission no longer exists - mission functionality disabled
+			// const hasMission = event.entity.mission?.waypoints && event.entity.mission.waypoints.length > 1;
+			// const existingMissionTrail = missionTrails.get(entityId);
 
-			if (hasMission) {
-				console.log('First waypoint object:', event.entity.mission!.waypoints[0]);
-				const waypointPoints: [number, number][] = event.entity.mission!.waypoints.map((waypoint: any) =>
-					[waypoint.latitude, waypoint.longitude]
-				);
+			// if (hasMission) {
+			// 	console.log('First waypoint object:', event.entity.mission!.waypoints[0]);
+			// 	const waypointPoints: [number, number][] = event.entity.mission!.waypoints.map((waypoint: any) =>
+			// 		[waypoint.latitude, waypoint.longitude]
+			// 	);
 
-				if (existingMissionTrail) {
-					// Update existing mission trail
-					existingMissionTrail.setLatLngs(waypointPoints);
-				} else {
-					// Create new mission trail
-					const missionTrail = L.polyline(waypointPoints, {
-						color: '#0066ff',    // Blue color
-						weight: 2,
-						opacity: 0.8,
-						dashArray: '10, 5'   // Dashed line to distinguish from track history
-					}).addTo(map);
+			// 	if (existingMissionTrail) {
+			// 		// Update existing mission trail
+			// 		existingMissionTrail.setLatLngs(waypointPoints);
+			// 	} else {
+			// 		// Create new mission trail
+			// 		const missionTrail = L.polyline(waypointPoints, {
+			// 			color: '#0066ff',    // Blue color
+			// 			weight: 2,
+			// 			opacity: 0.8,
+			// 			dashArray: '10, 5'   // Dashed line to distinguish from track history
+			// 		}).addTo(map);
 
-					missionTrails.set(entityId, missionTrail);
-				}
-			} else if (existingMissionTrail) {
-				// Remove mission trail if entity no longer has one
-				map.removeLayer(existingMissionTrail);
-				missionTrails.delete(entityId);
-			}
+			// 		missionTrails.set(entityId, missionTrail);
+			// 	}
+			// } else if (existingMissionTrail) {
+			// 	// Remove mission trail if entity no longer has one
+			// 	map.removeLayer(existingMissionTrail);
+			// 	missionTrails.delete(entityId);
+			// }
 
 		} catch (error) {
 			console.error('Error handling entity event:', error);

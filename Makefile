@@ -8,6 +8,7 @@ gen:
 
 frontend:
 	cd builtin/view && npm i
+	cd builtin/view && npm run gen-proto
 	cd builtin/view && npm run build
 
 aio: gen frontend

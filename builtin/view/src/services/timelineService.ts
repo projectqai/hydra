@@ -1,7 +1,7 @@
 import { createPromiseClient } from '@connectrpc/connect';
 import { createConnectTransport } from '@connectrpc/connect-web';
-import { TimelineService as TimelineServiceDef } from '../proto/world_connect';
-import { GetTimelineRequest, GetTimelineResponse, MoveTimelineRequest } from '../proto/world_pb';
+import { TimelineService as TimelineServiceDef } from '../proto/timeline_connect';
+import { GetTimelineRequest, GetTimelineResponse, MoveTimelineRequest } from '../proto/timeline_pb';
 import { Timestamp } from '@bufbuild/protobuf';
 
 export class TimelineService {
