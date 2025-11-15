@@ -13,7 +13,22 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            goos: linux
+            goarch: amd64
+          - os: ubuntu-latest
+            goos: linux
+            goarch: arm64
+          - os: ubuntu-latest
+            goos: windows
+            goarch: amd64
+          - os: macos-latest
+            goos: darwin
+            goarch: arm64
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     steps:
@@ -41,14 +56,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install system dependencies
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update && sudo apt-get install -y wget unzip
 
+      - name: Install system dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install wget
+
       - name: Install protoc
         run: |
-          wget https://github.com/protocolbuffers/protobuf/releases/download/v${{ env.PROTOC_VERSION }}/protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip
-          sudo unzip protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip -d /usr/local
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            PROTOC_ARCH="linux-x86_64"
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            PROTOC_ARCH="osx-x86_64"
+          fi
+          wget https://github.com/protocolbuffers/protobuf/releases/download/v${{ env.PROTOC_VERSION }}/protoc-${{ env.PROTOC_VERSION }}-${PROTOC_ARCH}.zip
+          sudo unzip protoc-${{ env.PROTOC_VERSION }}-${PROTOC_ARCH}.zip -d /usr/local
           sudo chmod +x /usr/local/bin/protoc
 
       - name: Install Go tools
@@ -68,6 +94,7 @@ jobs:
 
       - name: Set tag name for binaries
         id: tag
+        shell: bash
         run: |
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
@@ -75,27 +102,26 @@ jobs:
             echo "TAG_NAME=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build binaries
+      - name: Build binary
         env:
           CGO_ENABLED: 0
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        shell: bash
         run: |
           TAG_NAME=${{ steps.tag.outputs.TAG_NAME }}
-          GOOS=linux GOARCH=amd64 go build -o hydra-linux-amd64-${TAG_NAME} .
-          GOOS=linux GOARCH=arm64 go build -o hydra-linux-arm64-${TAG_NAME} .
-          GOOS=windows GOARCH=amd64 go build -o hydra-windows-amd64-${TAG_NAME}.exe .
-          GOOS=darwin GOARCH=amd64 go build -o hydra-darwin-amd64-${TAG_NAME} .
-          GOOS=darwin GOARCH=arm64 go build -o hydra-darwin-arm64-${TAG_NAME} .
+          if [[ "${{ matrix.goos }}" == "windows" ]]; then
+            go build -o hydra-${{ matrix.goos }}-${{ matrix.goarch }}-${TAG_NAME}.exe .
+          else
+            go build -o hydra-${{ matrix.goos }}-${{ matrix.goarch }}-${TAG_NAME} .
+          fi
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: hydra-binaries-${{ steps.tag.outputs.TAG_NAME }}
+          name: hydra-${{ matrix.goos }}-${{ matrix.goarch }}-${{ steps.tag.outputs.TAG_NAME }}
           path: |
-            hydra-linux-amd64-*
-            hydra-linux-arm64-*
-            hydra-windows-amd64-*.exe
-            hydra-darwin-amd64-*
-            hydra-darwin-arm64-*
+            hydra-*
           retention-days: 7
 
   release:
@@ -108,7 +134,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: hydra-binaries-*
+          pattern: hydra-*
           merge-multiple: true
 
       - name: Create GitHub Release
@@ -118,18 +144,16 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             Release ${{ github.ref_name }}
-            
+
             ## Downloads
             - Linux AMD64: hydra-linux-amd64-${{ github.ref_name }}
             - Linux ARM64: hydra-linux-arm64-${{ github.ref_name }}
             - Windows AMD64: hydra-windows-amd64-${{ github.ref_name }}.exe
-            - macOS AMD64: hydra-darwin-amd64-${{ github.ref_name }}
-            - macOS ARM64: hydra-darwin-arm64-${{ github.ref_name }}
+            - macOS ARM64 (Apple Silicon): hydra-darwin-arm64-${{ github.ref_name }}
           files: |
             hydra-linux-amd64-*
             hydra-linux-arm64-*
             hydra-windows-amd64-*.exe
-            hydra-darwin-amd64-*
             hydra-darwin-arm64-*
           draft: false
           prerelease: false
