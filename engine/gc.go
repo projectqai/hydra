@@ -3,7 +3,7 @@ package engine
 import (
 	"time"
 
-	"github.com/projectqai/hydra/proto"
+	proto "github.com/projectqai/proto/go"
 )
 
 func (s *worldServer) gc() {

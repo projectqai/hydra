@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"time"
 
-	pb "github.com/projectqai/hydra/proto"
+	pb "github.com/projectqai/proto/go"
 
 	"connectrpc.com/connect"
 	"google.golang.org/protobuf/types/known/timestamppb"

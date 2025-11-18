@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/projectqai/hydra/proto"
+	proto "github.com/projectqai/proto/go"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

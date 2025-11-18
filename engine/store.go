@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	pb "github.com/projectqai/hydra/proto"
+	pb "github.com/projectqai/proto/go"
 )
 
 type Event struct {

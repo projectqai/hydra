@@ -1,6 +1,3 @@
-//go:generate sh -c "PATH=\"$(go env GOPATH)/bin:$(go env GOROOT)/bin:$PATH\" protoc --doc_out=docs --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative --connect-go_out=. --connect-go_opt=paths=source_relative proto/world.proto"
-//go:generate sh -c "PATH=\"$(go env GOPATH)/bin:$(go env GOROOT)/bin:$PATH\" protoc --doc_out=docs --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative --connect-go_out=. --connect-go_opt=paths=source_relative proto/timeline.proto"
-
 package main
 
 import (

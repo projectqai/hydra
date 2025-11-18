@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	pb "github.com/projectqai/hydra/proto"
+	pb "github.com/projectqai/proto/go"
 
 	"connectrpc.com/connect"
 	"github.com/paulmach/orb"

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	pb "github.com/projectqai/hydra/proto"
+	pb "github.com/projectqai/proto/go"
 )
 
 // TODO refactor this into Store.Event once the observer is an entity

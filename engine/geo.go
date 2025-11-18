@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/projectqai/hydra/proto"
+	proto "github.com/projectqai/proto/go"
 	"github.com/paulmach/orb/encoding/wkb"
 )
 

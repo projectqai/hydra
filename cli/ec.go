@@ -9,7 +9,7 @@ import (
 	"github.com/projectqai/hydra/builtin"
 	"github.com/projectqai/hydra/cmd"
 	"github.com/projectqai/hydra/goclient"
-	pb "github.com/projectqai/hydra/proto"
+	pb "github.com/projectqai/proto/go"
 
 	"github.com/paulmach/orb"
 	"github.com/paulmach/orb/encoding/wkb"

@@ -13,8 +13,8 @@ import (
 	"time"
 
 	"github.com/projectqai/hydra/builtin/view"
-	pb "github.com/projectqai/hydra/proto"
-	"github.com/projectqai/hydra/proto/protoconnect"
+	pb "github.com/projectqai/proto/go"
+	"github.com/projectqai/proto/go/_goconnect"
 
 	"connectrpc.com/connect"
 	"github.com/paulmach/orb"
@@ -114,10 +114,10 @@ func RunEngine(cmd *cobra.Command, args []string) error {
 	// Create HTTP handlers
 	mux := http.NewServeMux()
 
-	worldPath, worldHandler := protoconnect.NewWorldServiceHandler(engine)
+	worldPath, worldHandler := _goconnect.NewWorldServiceHandler(engine)
 	mux.Handle(worldPath, worldHandler)
 
-	timelinePath, timelineHandler := protoconnect.NewTimelineServiceHandler(engine)
+	timelinePath, timelineHandler := _goconnect.NewTimelineServiceHandler(engine)
 	mux.Handle(timelinePath, timelineHandler)
 
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
