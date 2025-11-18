@@ -3,7 +3,6 @@ package engine
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"maps"
 	"net/http"
 	"slices"
@@ -12,6 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/fatih/color"
 	"github.com/projectqai/hydra/builtin/view"
 	pb "github.com/projectqai/proto/go"
 	"github.com/projectqai/proto/go/_goconnect"
@@ -142,7 +142,25 @@ func RunEngine(cmd *cobra.Command, args []string) error {
 		Handler: h2c.NewHandler(corsHandler.Handler(mux), &http2.Server{}),
 	}
 
-	slog.Info("world server on http://:50051")
+	localIPs := getAllLocalIPs()
+	green := color.New(color.FgGreen)
+	cyan := color.New(color.FgCyan)
+	bold := color.New(color.Bold)
+
+	fmt.Println()
+	green.Print("  ➜ ")
+	bold.Print("Hydra World Server")
+	fmt.Println(" running at:")
+	green.Print("  ➜ ")
+	fmt.Print("Local:   ")
+	cyan.Println("http://localhost:50051")
+
+	for _, ip := range localIPs {
+		green.Print("  ➜ ")
+		fmt.Print("Network: ")
+		cyan.Printf("http://%s:50051\n", ip)
+	}
+	fmt.Println()
 	if err := httpServer.ListenAndServe(); err != nil {
 		return fmt.Errorf("failed to serve: %v", err)
 	}
