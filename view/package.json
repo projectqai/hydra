@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "gen-proto": "buf generate ../../proto"
+    "gen-proto": "buf generate --path proto"
   },
   "dependencies": {
     "@bufbuild/buf": "^1.59.0",

@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/projectqai/hydra/builtin/view"
+	"github.com/projectqai/hydra/view"
 	pb "github.com/projectqai/proto/go"
 	"github.com/projectqai/proto/go/_goconnect"
 

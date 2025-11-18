@@ -572,7 +572,7 @@ const EntitySidebar = (props: EntitySidebarProps) => {
 				<div class="entity-sidebar-header">
 					<h3>
 						<span innerHTML={getHeaderIcon()}></span>
-						<span>{/* detailedEntity()?.description || */ 'ENTITY DETAILS'}</span>
+						<span>{detailedEntity()?.label || 'ENTITY DETAILS'}</span>
 					</h3>
 					<button class="close-button" onClick={props.onClose}>✕</button>
 				</div>

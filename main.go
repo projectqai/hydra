@@ -3,9 +3,10 @@ package main
 import (
 	"github.com/projectqai/hydra/cmd"
 
-	_ "github.com/projectqai/hydra/builtin/view"
 	_ "github.com/projectqai/hydra/cli"
 	"github.com/projectqai/hydra/engine"
+	_ "github.com/projectqai/hydra/mission"
+	_ "github.com/projectqai/hydra/view"
 	"github.com/spf13/cobra"
 
 	"github.com/pkg/browser"

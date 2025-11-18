@@ -7,9 +7,9 @@ gen:
 	go generate
 
 frontend:
-	cd builtin/view && npm i
-	cd builtin/view && npm run gen-proto
-	cd builtin/view && npm run build
+	cd view && npm i
+	cd view && npm run gen-proto
+	cd view && npm run build
 
 aio: gen frontend
 	go build -o hydra .
