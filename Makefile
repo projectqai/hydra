@@ -2,7 +2,6 @@
 
 all: aio
 
-
 gen:
 	go generate
 
@@ -13,6 +12,9 @@ frontend:
 
 aio: gen frontend
 	go build -o hydra .
+
+ext: gen frontend
+	go build -o hydra -tags ext .
 
 build: all
 

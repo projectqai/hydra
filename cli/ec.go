@@ -15,6 +15,7 @@ import (
 	"github.com/paulmach/orb/encoding/wkb"
 	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func init() {
@@ -40,8 +41,16 @@ func init() {
 		RunE:    runObserve,
 	}
 
+	debugCmd := &cobra.Command{
+		Use:     "debug",
+		Aliases: []string{"d"},
+		Short:   "subscribe to all change events and print as JSON",
+		RunE:    runDebug,
+	}
+
 	ECCMD.AddCommand(lsCmd)
 	ECCMD.AddCommand(observeCmd)
+	ECCMD.AddCommand(debugCmd)
 
 	cmd.CMD.AddCommand(ECCMD)
 }
@@ -140,4 +149,44 @@ func printEntitiesTable(entities []*pb.Entity) {
 	}
 
 	tbl.Print()
+}
+
+func runDebug(cmd *cobra.Command, args []string) error {
+	conn, err := goclient.Connect(builtin.ServerURL)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	world := pb.NewWorldServiceClient(conn)
+
+	// Subscribe to all change events (no geometry filter)
+	stream, err := goclient.WatchEntitiesWithRetry(cmd.Context(), world, &pb.ListEntitiesRequest{})
+	if err != nil {
+		return fmt.Errorf("failed to watch entities: %w", err)
+	}
+
+	// Configure JSON marshaler
+	marshaler := protojson.MarshalOptions{
+		UseProtoNames:   true,
+		EmitUnpopulated: false,
+		Indent:          "  ",
+	}
+
+	for {
+		event, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				return nil
+			}
+			return fmt.Errorf("stream error: %w", err)
+		}
+
+		// Marshal the entire EntityChangeEvent to JSON
+		jsonBytes, err := marshaler.Marshal(event)
+		if err != nil {
+			return fmt.Errorf("failed to marshal event: %w", err)
+		}
+
+		fmt.Println(string(jsonBytes))
+	}
 }
