@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/paulmach/orb v0.12.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/projectqai/proto/go v0.0.0-20251118181055-29f837efa2c9
+	github.com/projectqai/proto/go v0.0.0-20251120150826-be1f2bb9404a
 	github.com/rodaine/table v1.3.0
 	github.com/rs/cors v1.7.0
 	github.com/spf13/cobra v1.10.1
