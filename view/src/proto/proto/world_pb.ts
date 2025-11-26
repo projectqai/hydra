@@ -92,6 +92,11 @@ export class Entity extends Message<Entity> {
    */
   locationUncertainty?: LocationUncertaintyComponent;
 
+  /**
+   * @generated from field: optional world.GeoSpatialComponent measuredGeo = 21;
+   */
+  measuredGeo?: GeoSpatialComponent;
+
   constructor(data?: PartialMessage<Entity>) {
     super();
     proto3.util.initPartial(data, this);
@@ -110,6 +115,7 @@ export class Entity extends Message<Entity> {
     { no: 16, name: "detection", kind: "message", T: DetectionComponent, opt: true },
     { no: 17, name: "bearing", kind: "message", T: BearingComponent, opt: true },
     { no: 20, name: "locationUncertainty", kind: "message", T: LocationUncertaintyComponent, opt: true },
+    { no: 21, name: "measuredGeo", kind: "message", T: GeoSpatialComponent, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Entity {

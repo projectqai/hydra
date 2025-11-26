@@ -19,5 +19,5 @@ ext: gen frontend
 build: all
 
 clean:
-	rm -rf builtin/view/dist
+	rm -rf view/dist
 	rm -f hydra

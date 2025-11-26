@@ -36,8 +36,8 @@ jobs:
       - name: Cache Node.js modules
         uses: actions/cache@v4
         with:
-          path: builtin/view/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('builtin/view/package-lock.json') }}
+          path: view/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('view/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -61,7 +61,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
-          cd builtin/view && npm ci && cd ../..
+          cd view && npm ci && cd ../..
 
       - name: Generate code and build frontend
         run: make
