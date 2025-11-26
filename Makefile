@@ -10,10 +10,10 @@ frontend:
 	cd view && npm run gen-proto
 	cd view && npm run build
 
-aio: gen frontend
+aio: gen 
 	go build -o hydra .
 
-ext: gen frontend
+ext: gen 
 	go build -o hydra -tags ext .
 
 build: all

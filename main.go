@@ -1,6 +1,8 @@
 package main
 
 import (
+	_ "github.com/projectqai/hydra/logging"
+
 	"github.com/projectqai/hydra/cmd"
 
 	_ "github.com/projectqai/hydra/cli"

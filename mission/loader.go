@@ -78,6 +78,8 @@ func (m *Mission) Run(ctx context.Context) error {
 }
 
 func runConnectorWithRestart(ctx context.Context, id string, connector Connector) {
+	log := slog.Default().With("module", id)
+
 	backoff := time.Second
 	maxBackoff := time.Minute
 
@@ -88,7 +90,7 @@ func runConnectorWithRestart(ctx context.Context, id string, connector Connector
 		default:
 		}
 
-		slog.Info("starting connector", "id", id)
+		log.Info("starting connector")
 		err := connector.Run(ctx)
 
 		if err != nil {
@@ -96,9 +98,9 @@ func runConnectorWithRestart(ctx context.Context, id string, connector Connector
 				// Context was cancelled, don't restart
 				return
 			}
-			slog.Error("connector exited with error, restarting", "id", id, "error", err, "backoff", backoff)
+			log.Error("connector exited with error, restarting", "error", err, "backoff", backoff)
 		} else {
-			slog.Warn("connector exited unexpectedly, restarting", "id", id, "backoff", backoff)
+			log.Warn("connector exited unexpectedly, restarting", "backoff", backoff)
 		}
 
 		// Wait before restarting
