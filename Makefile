@@ -6,11 +6,10 @@ gen:
 	go generate
 
 frontend:
-	cd view && npm i
-	cd view && npm run gen-proto
-	cd view && npm run build
+	cd view/frontend && bun i
+	cd view/frontend && bun build:web
 
-aio: gen
+aio: gen frontend
 	go build -ldflags="-X 'github.com/projectqai/hydra/version.Version=$$(git describe --always --dirty --tags)'" -o hydra .
 
 ext: gen

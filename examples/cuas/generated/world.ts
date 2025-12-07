@@ -23,6 +23,10 @@ export interface Entity {
      */
     id: string;
     /**
+     * @generated from protobuf field: optional string label = 2
+     */
+    label?: string;
+    /**
      * @generated from protobuf field: optional world.ControllerRef controller = 3
      */
     controller?: ControllerRef;
@@ -54,6 +58,10 @@ export interface Entity {
      * @generated from protobuf field: optional world.LocationUncertaintyComponent locationUncertainty = 20
      */
     locationUncertainty?: LocationUncertaintyComponent;
+    /**
+     * @generated from protobuf field: optional world.TrackComponent track = 21
+     */
+    track?: TrackComponent;
 }
 /**
  * @generated from protobuf message world.ControllerRef
@@ -201,6 +209,11 @@ export interface LocationUncertaintyComponent {
      */
     velocityEnuCov?: CovarianceMatrix;
 }
+/**
+ * @generated from protobuf message world.TrackComponent
+ */
+export interface TrackComponent {
+}
 // ---------------------------------------------
 
 /**
@@ -327,6 +340,7 @@ class Entity$Type extends MessageType<Entity> {
     constructor() {
         super("world.Entity", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "controller", kind: "message", T: () => ControllerRef },
             { no: 4, name: "lifetime", kind: "message", T: () => Lifetime },
             { no: 11, name: "geo", kind: "message", T: () => GeoSpatialComponent },
@@ -334,7 +348,8 @@ class Entity$Type extends MessageType<Entity> {
             { no: 15, name: "camera", kind: "message", T: () => CameraComponent },
             { no: 16, name: "detection", kind: "message", T: () => DetectionComponent },
             { no: 17, name: "bearing", kind: "message", T: () => BearingComponent },
-            { no: 20, name: "locationUncertainty", kind: "message", T: () => LocationUncertaintyComponent }
+            { no: 20, name: "locationUncertainty", kind: "message", T: () => LocationUncertaintyComponent },
+            { no: 21, name: "track", kind: "message", T: () => TrackComponent }
         ]);
     }
     create(value?: PartialMessage<Entity>): Entity {
@@ -351,6 +366,9 @@ class Entity$Type extends MessageType<Entity> {
             switch (fieldNo) {
                 case /* string id */ 1:
                     message.id = reader.string();
+                    break;
+                case /* optional string label */ 2:
+                    message.label = reader.string();
                     break;
                 case /* optional world.ControllerRef controller */ 3:
                     message.controller = ControllerRef.internalBinaryRead(reader, reader.uint32(), options, message.controller);
@@ -376,6 +394,9 @@ class Entity$Type extends MessageType<Entity> {
                 case /* optional world.LocationUncertaintyComponent locationUncertainty */ 20:
                     message.locationUncertainty = LocationUncertaintyComponent.internalBinaryRead(reader, reader.uint32(), options, message.locationUncertainty);
                     break;
+                case /* optional world.TrackComponent track */ 21:
+                    message.track = TrackComponent.internalBinaryRead(reader, reader.uint32(), options, message.track);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -391,6 +412,9 @@ class Entity$Type extends MessageType<Entity> {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* optional string label = 2; */
+        if (message.label !== undefined)
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
         /* optional world.ControllerRef controller = 3; */
         if (message.controller)
             ControllerRef.internalBinaryWrite(message.controller, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
@@ -415,6 +439,9 @@ class Entity$Type extends MessageType<Entity> {
         /* optional world.LocationUncertaintyComponent locationUncertainty = 20; */
         if (message.locationUncertainty)
             LocationUncertaintyComponent.internalBinaryWrite(message.locationUncertainty, writer.tag(20, WireType.LengthDelimited).fork(), options).join();
+        /* optional world.TrackComponent track = 21; */
+        if (message.track)
+            TrackComponent.internalBinaryWrite(message.track, writer.tag(21, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -992,6 +1019,44 @@ class LocationUncertaintyComponent$Type extends MessageType<LocationUncertaintyC
  * @generated MessageType for protobuf message world.LocationUncertaintyComponent
  */
 export const LocationUncertaintyComponent = new LocationUncertaintyComponent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TrackComponent$Type extends MessageType<TrackComponent> {
+    constructor() {
+        super("world.TrackComponent", []);
+    }
+    create(value?: PartialMessage<TrackComponent>): TrackComponent {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<TrackComponent>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TrackComponent): TrackComponent {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TrackComponent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message world.TrackComponent
+ */
+export const TrackComponent = new TrackComponent$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Geometry$Type extends MessageType<Geometry> {
     constructor() {

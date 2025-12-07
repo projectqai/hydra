@@ -11,13 +11,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//go:embed all:frontend/dist
+//go:embed all:frontend/build
 var dist embed.FS
 
 var port string
 
 func NewWebServer() (http.Handler, error) {
-	distFS, err := fs.Sub(dist, "frontend/dist")
+	distFS, err := fs.Sub(dist, "frontend/build")
 	if err != nil {
 		return nil, fmt.Errorf("failed to get dist subdirectory: %w", err)
 	}

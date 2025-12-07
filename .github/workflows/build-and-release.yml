@@ -28,18 +28,18 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '20'
+          bun-version: latest
 
-      - name: Cache Node.js modules
+      - name: Cache Bun modules
         uses: actions/cache@v4
         with:
           path: view/frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('view/frontend/package-lock.json') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('view/frontend/bun.lockb') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-bun-
 
       - name: Install system dependencies
         run: |
@@ -61,7 +61,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
-          cd view/frontend && npm i
+          cd view/frontend && bun i
 
       - name: Generate code and build frontend
         run: make

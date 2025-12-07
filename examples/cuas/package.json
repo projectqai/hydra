@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "push-entities": "bun run push-entities.ts",
-    "generate": "protoc --ts_out=./generated --proto_path=../proto ../proto/world.proto --ts_opt=generate_dependencies,long_type_string"
+    "generate": "PATH=\"$PATH:./node_modules/.bin\" protoc --ts_out=./generated --proto_path=../../view/proto/ ../../view/proto/world.proto --ts_opt=generate_dependencies,long_type_string"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.12.4",

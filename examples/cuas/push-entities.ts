@@ -97,12 +97,13 @@ async function pushEntities() {
       altitude: ALTITUDE + 100, // Drone at 150m
     },
     symbol: {
-      milStd2525C: 'SFAPMFQ----', // Friendly quadcopter
+      milStd2525C: 'SHAPMFQ----',
     },
     bearing: {
       azimuth: 180, // Pointing south (180 degrees)
       elevation: 0,
     },
+	track: {},
   };
 
   console.log(`\nSending entity:`, JSON.stringify(droneEntity, null, 2));

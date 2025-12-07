@@ -1,3 +1,3 @@
-[submodule "proto"]
-	path = view/frontend/proto
-	url = git@github.com:projectqai/proto.git
+[submodule "view/frontend"]
+	path = view/frontend
+	url = https://github.com/projectqai/hydra-expo.git
