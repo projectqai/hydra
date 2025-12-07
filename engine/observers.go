@@ -20,7 +20,7 @@ type observer struct {
 	C     chan busevent
 }
 
-func (s *worldServer) WatchEntities(ctx context.Context, req *connect.Request[pb.ListEntitiesRequest], stream *connect.ServerStream[pb.EntityChangeEvent]) error {
+func (s *WorldServer) WatchEntities(ctx context.Context, req *connect.Request[pb.ListEntitiesRequest], stream *connect.ServerStream[pb.EntityChangeEvent]) error {
 	this := &observer{trace: "watchentities " + req.Peer().Addr}
 	s.bus.observe(this)
 	if req.Msg.Geo != nil {
@@ -81,7 +81,7 @@ func (s *worldServer) WatchEntities(ctx context.Context, req *connect.Request[pb
 	}
 }
 
-func (s *worldServer) Observe(
+func (s *WorldServer) Observe(
 	ctx context.Context,
 	req *connect.Request[pb.ObserverRequest],
 	stream *connect.ServerStream[pb.ObserverState],

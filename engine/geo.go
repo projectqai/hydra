@@ -5,7 +5,7 @@ import (
 	"github.com/paulmach/orb/encoding/wkb"
 )
 
-func (s *worldServer) addObservedGeom(g *proto.Geometry) {
+func (s *WorldServer) addObservedGeom(g *proto.Geometry) {
 	gg, err := wkb.Unmarshal(g.Wkb)
 	if err != nil {
 		return
@@ -16,7 +16,7 @@ func (s *worldServer) addObservedGeom(g *proto.Geometry) {
 	s.observed[g] = gg
 }
 
-func (s *worldServer) removeObservedGeom(g *proto.Geometry) {
+func (s *WorldServer) removeObservedGeom(g *proto.Geometry) {
 	s.l.Lock()
 	defer s.l.Unlock()
 	delete(s.observed, g)

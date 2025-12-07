@@ -26,7 +26,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-type worldServer struct {
+type WorldServer struct {
 	l sync.RWMutex
 
 	bus *Bus
@@ -41,7 +41,27 @@ type worldServer struct {
 	observed map[*pb.Geometry]orb.Geometry
 }
 
-func (s *worldServer) ListEntities(ctx context.Context, req *connect.Request[pb.ListEntitiesRequest]) (*connect.Response[pb.ListEntitiesResponse], error) {
+func NewWorldServer() *WorldServer {
+	server := &WorldServer{
+		bus:      NewBus(),
+		head:     make(map[string]*pb.Entity),
+		observed: make(map[*pb.Geometry]orb.Geometry),
+		store:    NewStore(),
+	}
+
+	// Start garbage collection ticker
+	go func() {
+		ticker := time.NewTicker(time.Second)
+		defer ticker.Stop()
+		for range ticker.C {
+			server.gc()
+		}
+	}()
+
+	return server
+}
+
+func (s *WorldServer) ListEntities(ctx context.Context, req *connect.Request[pb.ListEntitiesRequest]) (*connect.Response[pb.ListEntitiesResponse], error) {
 	s.l.RLock()
 	defer s.l.RUnlock()
 
@@ -54,7 +74,7 @@ func (s *worldServer) ListEntities(ctx context.Context, req *connect.Request[pb.
 	return connect.NewResponse(response), nil
 }
 
-func (s *worldServer) GetEntity(ctx context.Context, req *connect.Request[pb.GetEntityRequest]) (*connect.Response[pb.GetEntityResponse], error) {
+func (s *WorldServer) GetEntity(ctx context.Context, req *connect.Request[pb.GetEntityRequest]) (*connect.Response[pb.GetEntityResponse], error) {
 	s.l.RLock()
 	defer s.l.RUnlock()
 
@@ -69,7 +89,7 @@ func (s *worldServer) GetEntity(ctx context.Context, req *connect.Request[pb.Get
 	return connect.NewResponse(response), nil
 }
 
-func (s *worldServer) Push(ctx context.Context, req *connect.Request[pb.EntityChangeRequest]) (*connect.Response[pb.EntityChangeResponse], error) {
+func (s *WorldServer) Push(ctx context.Context, req *connect.Request[pb.EntityChangeRequest]) (*connect.Response[pb.EntityChangeResponse], error) {
 	s.l.Lock()
 	defer s.l.Unlock()
 	for _, e := range req.Msg.Changes {
@@ -97,20 +117,7 @@ func (s *worldServer) Push(ctx context.Context, req *connect.Request[pb.EntityCh
 }
 
 func RunEngine(cmd *cobra.Command, args []string) error {
-	engine := &worldServer{}
-	engine.bus = NewBus()
-
-	// sample data
-	engine.head = make(map[string]*pb.Entity)
-	engine.observed = make(map[*pb.Geometry]orb.Geometry)
-	engine.store = NewStore()
-
-	go func() {
-		ticker := time.NewTicker(time.Second)
-		for range ticker.C {
-			engine.gc()
-		}
-	}()
+	engine := NewWorldServer()
 
 	// Create HTTP handlers
 	mux := http.NewServeMux()

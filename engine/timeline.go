@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func (s *worldServer) GetTimeline(ctx context.Context, req *connect.Request[pb.GetTimelineRequest], stream *connect.ServerStream[pb.GetTimelineResponse]) error {
+func (s *WorldServer) GetTimeline(ctx context.Context, req *connect.Request[pb.GetTimelineRequest], stream *connect.ServerStream[pb.GetTimelineResponse]) error {
 	this := &observer{trace: "timeline"}
 	s.bus.observe(this)
 	defer s.bus.unobserve(this)
@@ -63,7 +63,7 @@ func (s *worldServer) GetTimeline(ctx context.Context, req *connect.Request[pb.G
 	}
 }
 
-func (s *worldServer) MoveTimeline(ctx context.Context, req *connect.Request[pb.MoveTimelineRequest]) (*connect.Response[pb.MoveTimelineResponse], error) {
+func (s *WorldServer) MoveTimeline(ctx context.Context, req *connect.Request[pb.MoveTimelineRequest]) (*connect.Response[pb.MoveTimelineResponse], error) {
 	min, max := s.store.GetTimeline()
 	slog.Info("TIMEWARP", "freeze", req.Msg.Freeze, "at", req.Msg.At.AsTime(), "min", min, "max", max)
 

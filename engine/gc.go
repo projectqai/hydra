@@ -6,7 +6,7 @@ import (
 	proto "github.com/projectqai/proto/go"
 )
 
-func (s *worldServer) gc() {
+func (s *WorldServer) gc() {
 	now := time.Now()
 	if s.frozen.Load() {
 		now = s.frozenAt
