@@ -10,7 +10,7 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/paulmach/orb v0.12.0
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-	github.com/projectqai/proto/go v0.0.0-20251120150826-be1f2bb9404a
+	github.com/projectqai/proto/go v0.0.0-20251209104458-4ddb8f68ea74
 	github.com/rodaine/table v1.3.0
 	github.com/rs/cors v1.7.0
 	github.com/spf13/cobra v1.10.1

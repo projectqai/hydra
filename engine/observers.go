@@ -38,7 +38,7 @@ func (s *WorldServer) WatchEntities(ctx context.Context, req *connect.Request[pb
 
 	// ui workaround
 	stream.Send(&pb.EntityChangeEvent{
-		T: pb.EntityChange_Invalid,
+		T: pb.EntityChange_EntityChangeInvalid,
 	})
 
 	f := func() error {
@@ -48,7 +48,7 @@ func (s *WorldServer) WatchEntities(ctx context.Context, req *connect.Request[pb
 		slices.SortFunc(el, func(a, b *pb.Entity) int { return strings.Compare(a.Id, b.Id) })
 		for _, e := range el {
 			if err := stream.Send(&pb.EntityChangeEvent{
-				T:      pb.EntityChange_Updated,
+				T:      pb.EntityChange_EntityChangeUpdated,
 				Entity: e,
 			}); err != nil {
 				return err

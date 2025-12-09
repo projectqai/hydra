@@ -72,6 +72,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/projectqai/proto/go v0.0.0-20251120150826-be1f2bb9404a h1:VxxGriYnQ0NF7FoyeJBcJG69ZyO6XjCgiGRQgwnaDz8=
 github.com/projectqai/proto/go v0.0.0-20251120150826-be1f2bb9404a/go.mod h1:l3Ex+xL7tbfs+rGnl08pwmKYx/syMozuJYxL1YoMJ5k=
+github.com/projectqai/proto/go v0.0.0-20251209104458-4ddb8f68ea74 h1:ixJcq2mcmn/hLKtrbBH8FcBZ1qdHM6KDvLAf44YXsow=
+github.com/projectqai/proto/go v0.0.0-20251209104458-4ddb8f68ea74/go.mod h1:l3Ex+xL7tbfs+rGnl08pwmKYx/syMozuJYxL1YoMJ5k=
 github.com/pseudomuto/protoc-gen-doc v1.5.1 h1:Ah259kcrio7Ix1Rhb6u8FCaOkzf9qRBqXnvAufg061w=
 github.com/pseudomuto/protoc-gen-doc v1.5.1/go.mod h1:XpMKYg6zkcpgfpCfQ8GcWBDRtRxOmMR5w7pz4Xo+dYM=
 github.com/pseudomuto/protokit v0.2.0 h1:hlnBDcy3YEDXH7kc9gV+NLaN0cDzhDvD1s7Y6FZ8RpM=

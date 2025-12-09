@@ -21,7 +21,7 @@ func (s *WorldServer) gc() {
 				s.bus.publish(busevent{
 					trace: "gc",
 					entity: &proto.EntityChangeEvent{
-						T:      proto.EntityChange_Expired,
+						T:      proto.EntityChange_EntityChangeExpired,
 						Entity: v,
 					},
 				})

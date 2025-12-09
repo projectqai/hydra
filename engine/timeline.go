@@ -86,7 +86,7 @@ func (s *WorldServer) MoveTimeline(ctx context.Context, req *connect.Request[pb.
 		s.bus.publish(busevent{
 			timeline: true,
 			entity: &pb.EntityChangeEvent{
-				T:      pb.EntityChange_Updated,
+				T:      pb.EntityChange_EntityChangeUpdated,
 				Entity: e,
 			},
 			trace: "timeline move with events",

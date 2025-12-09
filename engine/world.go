@@ -105,7 +105,7 @@ func (s *WorldServer) Push(ctx context.Context, req *connect.Request[pb.EntityCh
 		s.store.Push(ctx, Event{Entity: e})
 		if !s.frozen.Load() {
 			s.head[e.Id] = e
-			s.bus.publish(busevent{entity: &pb.EntityChangeEvent{Entity: e, T: pb.EntityChange_Updated}, trace: "grpc push"})
+			s.bus.publish(busevent{entity: &pb.EntityChangeEvent{Entity: e, T: pb.EntityChange_EntityChangeUpdated}, trace: "grpc push"})
 		}
 	}
 
